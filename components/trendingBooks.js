@@ -2,7 +2,6 @@ import { Dimensions, Text,  TouchableWithoutFeedback, View, Image } from 'react-
 import React from 'react'
 import Carousel from 'react-native-snap-carousel'
 import { useNavigation } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 var {width, height} = Dimensions.get('window')
 
@@ -11,6 +10,21 @@ const trendingBooks = ({data}) => {
 
   const handleClick = (item) =>{
     navigation.navigate('Book', item)
+  }
+
+  const BookCard = ({item}) =>{
+    return(
+      <TouchableWithoutFeedback onPress={()=> handleClick(item)}>
+        <Image
+            source = {require('../assets/portada.jpg')}
+            style = {{
+            width: width*0.6,
+            height : height*0.4
+          }}
+          className='rounded-3xl'
+        />
+      </TouchableWithoutFeedback>
+    )
   }
 
   return (
@@ -28,22 +42,9 @@ const trendingBooks = ({data}) => {
 
     </View>
   )
+  
 }
 
-const BookCard = ({item}) =>{
-  return(
-    <TouchableWithoutFeedback onPress={()=> handleClick(item)}>
-      <Image
-          source = {require('../assets/favicon.png')}
-          style = {{
-          width: width*0.6,
-          height : height*0.4
-        }}
-        className='rounded-3xl'
-      />
-    </TouchableWithoutFeedback>
-  )
-}
 
 export default trendingBooks
 
