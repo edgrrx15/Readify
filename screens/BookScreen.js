@@ -12,7 +12,7 @@ const ios = Platform.OS === 'ios'
 const topMargin = ios ? '' : 'mt-3'
 
 export default function BookScreen() {
-    let bookName = 'tontos todos'
+    let bookName = 'tontos todos los odio'
     const {params: item} = useRoute()
     const [isFavourite, toggleFavourite] = useState(false)
     const [similarBooks, setSimilarBooks] = useState([1,2,3,4,5,6])
