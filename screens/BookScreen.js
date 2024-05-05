@@ -1,65 +1,84 @@
-import { Dimensions, SafeAreaView, TouchableOpacity, View, ScrollView, Platform, Image, Text} from 'react-native'
-import React, { useEffect, useReducer, useState } from 'react'
-import { useNavigation, useRoute } from '@react-navigation/native'
-import { Ionicons } from '@expo/vector-icons'
-import { LinearGradient } from 'expo-linear-gradient'
-import BookList  from '../components/bookList'
-
-
-var {width, height} = Dimensions.get('window')
-
-const ios = Platform.OS === 'ios'
-const topMargin = ios ? '' : 'mt-3'
-
-export default function BookScreen() {
-    let bookName = 'tontos todos los odio'
-    const {params: item} = useRoute()
-    const [isFavourite, toggleFavourite] = useState(false)
-    const [similarBooks, setSimilarBooks] = useState([1,2,3,4,5,6])
-    const navigation = useNavigation()
-    useEffect(()=> {
-
-    },[item])
-
-  return (
-    <ScrollView 
-        contentContainerStyle={{paddinBottom: 20}}
-        className= 'flex-1 bg-neutral-900'
-    >
-        <View className='w-full'>
-            <SafeAreaView className={'absolute z-20 w-full flex-row justify-between items-center px-4'+ topMargin}>
-               
-                <TouchableOpacity onPress={()=>navigation.goBack()} className='rounded-xl p-1 '>
-                    <Ionicons name="arrow-back" size={32} color="#faf9f6" />
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={() => toggleFavourite(!isFavourite)}>
-                    <Ionicons name="heart"size={32} color={isFavourite ? '#ff2626' : "#faf9f6" }/>
-                </TouchableOpacity>
-            </SafeAreaView>
-
-            <View className='oveflow-hidden rounded-full h-20 w-20 items-center border border-neutral-500'>
-                <Image
-                    source={require('../assets/portada.jpg')}
-                    className= 'rounded-2xl h-24 w-20'
-                />
-            </View>
+import {
+    Dimensions,
+    SafeAreaView,
+    TouchableOpacity,
+    View,
+    ScrollView,
+    Platform,
+    Image,
+    Text,
+  } from 'react-native';
+  import React, { useEffect, useState } from 'react';
+  import { useNavigation, useRoute } from '@react-navigation/native';
+  import { Ionicons } from '@expo/vector-icons';
+  import BookList from '../components/bookList';
+  
+  const { width, height } = Dimensions.get('window');
+  const ios = Platform.OS === 'ios';
+  const topMargin = ios ? '' : 'mt-3';
+  
+  export default function BookScreen() {
+    const { params: { book } } = useRoute(); // Obtén el parámetro 'book' pasado en la ruta
+    const [isFavourite, toggleFavourite] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const navigation = useNavigation();
+  
+    useEffect(() => {
+      // Puedes realizar operaciones aquí con los detalles del libro, como cargar libros similares
+      setLoading(false); // Ejemplo de cambio de estado de carga
+    }, [book]);
+  
+    return (
+      <ScrollView
+        contentContainerStyle={{ paddingBottom: 20 }}
+        className="flex-1 bg-neutral-900"
+      >
+        <View className="w-full">
+          <SafeAreaView
+            className={"absolute z-20 w-full flex-row justify-between items-center px-4" + topMargin}
+          >
+            <TouchableOpacity onPress={() => navigation.goBack()} className="rounded-xl p-1">
+              <Ionicons name="arrow-back" size={32} color="#faf9f6" />
+            </TouchableOpacity>
+  
+            <TouchableOpacity onPress={() => toggleFavourite(!isFavourite)}>
+              <Ionicons name="heart" size={32} color={isFavourite ? '#ff2626' : "#faf9f6"} />
+            </TouchableOpacity>
+          </SafeAreaView>
+  
+          <View className="overflow-hidden rounded-full h-20 w-20 items-center border border-neutral-500">
+            <Image
+              source={{
+                uri: book.volumeInfo.imageLinks?.thumbnail
+                  ? book.volumeInfo.imageLinks.thumbnail
+                  : 'https://example.com/default-cover.jpg', // Imagen por defecto si no hay portada
+              }}
+              className="rounded-2xl"
+              style={{ width, height: height * 0.55 }}
+            />
+          </View>
         </View>
-
-        <View style={{marginTop:  -(height*0.09)}} className='space-y-3'>
-            <Text className='text-color-texto text-center text-3xl font-bold -tracking-wider'>
-                {bookName}
+  
+        <View style={{ marginTop: -(height * 0.09) }} className="space-y-3">
+          <Text className="text-color-texto text-center text-3xl font-bold -tracking-wider">
+            {book.volumeInfo.title || 'Sin título'}
+          </Text>
+          <View className="flex-row justify-center mx-4 space-x-2">
+            <Text className="text-neutral-400 font-semibold text-base text-center">
+              {book.volumeInfo.categories?.[0] || 'Sin categoría'}
             </Text>
-            <View className='flex-row justify-center mx-4 space-x-2'>
-                <Text className='text-neutral-400 font-semibold text-base text-center'>Filosofia</Text>
-            </View>
-            <Text className='text-neutral-400 font-semibold text-base text-center'>Autor</Text>
-            <Text className='text-neutral-400 font-semibold text-base text-center'>Descripcion</Text>
+          </View>
+          <Text className="text-neutral-400 font-semibold text-base text-center">
+            {book.volumeInfo.authors?.join(', ') || 'Autor desconocido'}
+          </Text>
+          <Text className="text-neutral-400 font-semibold text-base text-center">
+            {book.volumeInfo.description || 'Sin descripción'}
+          </Text>
         </View>
-
-        <BookList title='Libros Similares' data={similarBooks} hideSeeAll={true}/>
-      
-    </ScrollView>
-  )
-}
-
+  
+        {/* Esto es para libros similares, puedes ajustar según tus necesidades */}
+        <BookList title="Libros Similares" data={[]} hideSeeAll={true} />
+      </ScrollView>
+    );
+  }
+  

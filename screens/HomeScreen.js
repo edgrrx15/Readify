@@ -5,11 +5,12 @@ import { Ionicons } from '@expo/vector-icons';
 import TrendingBooks from '../components/TrendingBooks';
 import BookList from '../components/bookList'
 import { useNavigation } from '@react-navigation/native';
-
+import Loading from '../components/loading';
 
 export default function HomeScreen() {
     const [trending, setTrending] = useState([1, 2, 3]);
     const [topRated, setTopRated] = useState([1, 2, 3]);
+    const [loading, setLoading] = useState(false)
     const navigation = useNavigation()
 
     return (
@@ -27,14 +28,22 @@ export default function HomeScreen() {
                 </View>
             </View>
 
-            <ScrollView
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{ paddingBottom: 10 }}
-            >
-                <TrendingBooks data={trending} />
-                <BookList title="Top Rated" data={topRated} />
-                
-            </ScrollView>
+            {
+                loading ? (
+                    <Loading/>
+                ):(
+                    <ScrollView
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={{ paddingBottom: 10 }}
+                     >
+                        <TrendingBooks data={trending} />
+                        <BookList title="Top Rated" data={topRated} />
+
+                    </ScrollView>
+                )
+            }
+
+
         </SafeAreaView>
     );
 }

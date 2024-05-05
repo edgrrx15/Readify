@@ -13,19 +13,19 @@ const trendingBooks = ({data}) => {
   }
 
   const BookCard = ({item}) =>{
-    return(
-      <TouchableWithoutFeedback onPress={()=> handleClick(item)}>
-        <Image
-            source = {require('../assets/portada.jpg')}
-            style = {{
-            width: width*0.6,
-            height : height*0.4
-          }}
-          className='rounded-3xl'
-        />
-      </TouchableWithoutFeedback>
-    )
-  }
+  return(
+    <TouchableWithoutFeedback onPress={()=> handleClick(item)}>
+      <Image
+          source = {require('../assets/portada.jpg')}
+          style = {{
+          width: width*0.6,
+          height : height*0.4
+        }}
+        className='rounded-3xl'
+      />
+    </TouchableWithoutFeedback>
+  )
+}
 
   return (
     <View className='mb-8'>
