@@ -24,8 +24,8 @@ import {
     const navigation = useNavigation();
   
     useEffect(() => {
-      // Puedes realizar operaciones aquí con los detalles del libro, como cargar libros similares
-      setLoading(false); // Ejemplo de cambio de estado de carga
+    
+      setLoading(false); 
     }, [book]);
   
     return (
@@ -51,7 +51,7 @@ import {
               source={{
                 uri: book.volumeInfo.imageLinks?.thumbnail
                   ? book.volumeInfo.imageLinks.thumbnail
-                  : 'https://example.com/default-cover.jpg', // Imagen por defecto si no hay portada
+                  : '../assets/portada.jpg', // Imagen por defecto si no hay portada
               }}
               className="rounded-2xl"
               style={{ width, height: height * 0.55 }}
@@ -75,9 +75,7 @@ import {
             {book.volumeInfo.description || 'Sin descripción'}
           </Text>
         </View>
-  
-        {/* Esto es para libros similares, puedes ajustar según tus necesidades */}
-        <BookList title="Libros Similares" data={[]} hideSeeAll={true} />
+          <BookList title="Libros Similares" data={[]} hideSeeAll={true} />
       </ScrollView>
     );
   }

@@ -6,6 +6,7 @@ import TrendingBooks from '../components/TrendingBooks';
 import BookList from '../components/bookList'
 import { useNavigation } from '@react-navigation/native';
 import Loading from '../components/loading';
+import Categories from '../components/BookCategories'
 
 export default function HomeScreen() {
     const [trending, setTrending] = useState([1, 2, 3]);
@@ -38,6 +39,7 @@ export default function HomeScreen() {
                      >
                         <TrendingBooks data={trending} />
                         <BookList title="Top Rated" data={topRated} />
+
 
                     </ScrollView>
                 )
