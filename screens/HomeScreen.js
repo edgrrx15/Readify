@@ -30,17 +30,22 @@ export default function HomeScreen() {
           'Romance',
           'Aventura',
           'Literatura juvenil',
-          'Desarrollo Personal',
+          'Infantil',
+          'Matematicas',
         ]);
         setLoading(false); 
       }, []);
+
 /* color alterno : #faf9f6 */
+
+/* BOTON DE MENU AUN NO TIENE NINGUNA FUNCION */
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#ddd', paddingTop:30 }}>
             <StatusBar style="light" />
             <View style={{ paddingHorizontal: 26, paddingVertical: 8 }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={()=> navigation.navigate('Menu')} >
                         <Ionicons name="menu" size={32} color="#212121" />
                     </TouchableOpacity>
                     <Text style={{ color: '#212121', fontSize: 49, fontWeight: 'bold' }}>Readify</Text>

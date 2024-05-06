@@ -22,7 +22,9 @@ const categories = [
   'Romance',
   'Aventura',
   'Literatura juvenil',
-  'Desarrollo Personal',
+  'Auto-ayuda',
+  'Infantil',
+  'Matematicas',
 ];
 
 const Category = ({title}) => {
@@ -66,12 +68,14 @@ const Category = ({title}) => {
       <TouchableWithoutFeedback onPress={() => handleClick(item)}>
         <Image
           source={{
-            uri: item.volumeInfo.imageLinks?.thumbnail || 'No hay imagen',
+            uri: item.volumeInfo.imageLinks?.thumbnail || '../assets/no-cover.png'
           }}
           style={{
             width: width * 0.6,
             height: height * 0.4,
+
           }}
+          resizeMode='cover'
         />
       </TouchableWithoutFeedback>
       <Text style={{fontWeight:'semibold'}}>

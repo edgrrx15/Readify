@@ -14,6 +14,7 @@
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
     "axios": "^1.6.8",
+    "date-fns": "^3.6.0",
     "expo": "~50.0.17",
     "expo-status-bar": "~1.11.1",
     "install": "^0.13.0",
@@ -26,7 +27,9 @@
     "react-native-linear-gradient": "^2.8.3",
     "react-native-progress": "^5.0.1",
     "react-native-reanimated": "~3.6.2",
-    "react-native-snap-carousel": "^3.9.1"
+    "react-native-render-html": "^6.3.4",
+    "react-native-snap-carousel": "^3.9.1",
+    "react-native-webview": "^13.8.7"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
