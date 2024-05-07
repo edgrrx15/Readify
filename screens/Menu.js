@@ -14,7 +14,9 @@ export default function Menu() {
 
       <TouchableOpacity onPress={() => navigation.goBack()} className="rounded-xl p-1">
           <Feather name="arrow-left" size={24} color="black" />
-          </TouchableOpacity>
+      </TouchableOpacity>
+
+      
     </View>
   )
 }

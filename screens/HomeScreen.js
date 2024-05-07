@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Category from '../components/Category';
 import { useNavigation } from '@react-navigation/native';
 import Loading from '../components/loading';
-
+import { AntDesign } from '@expo/vector-icons';
 
 /*
  
@@ -17,6 +17,7 @@ NOTA: QUITAR LOS ESTILOS EN LINEA O USAR TAILWIND*/
 export default function HomeScreen() {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false)
+  
     const navigation = useNavigation()
 
     useEffect(() => {
@@ -41,16 +42,16 @@ export default function HomeScreen() {
 /* BOTON DE MENU AUN NO TIENE NINGUNA FUNCION */
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#ddd', paddingTop:30 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#181818', paddingTop:30 }}>
             <StatusBar style="light" />
             <View style={{ paddingHorizontal: 26, paddingVertical: 8 }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     <TouchableOpacity onPress={()=> navigation.navigate('Menu')} >
-                        <Ionicons name="menu" size={32} color="#212121" />
+                        <Ionicons name="menu" size={32} color="#faf9f6" />
                     </TouchableOpacity>
-                    <Text style={{ color: '#212121', fontSize: 49, fontWeight: 'bold' }}>Readify</Text>
+                    <Text style={{ color: '#faf9f6', fontSize: 49, fontWeight: 'bold' }}>Readify</Text>
                     <TouchableOpacity onPress={()=> navigation.navigate('Search')}>
-                        <Ionicons name="search" size={32} color="#212121" /> 
+                        <AntDesign name="search1" size={32} color="#faf9f6" />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -60,7 +61,7 @@ export default function HomeScreen() {
                     <Loading/>
                 ):(
                     <ScrollView showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 10 }}>
-                      <Category title='categorias'/>
+                      <Category title='Categorias'/>
                     </ScrollView>
                 )
             }
