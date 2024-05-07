@@ -6,10 +6,12 @@ import Category from '../components/Category';
 import { useNavigation } from '@react-navigation/native';
 import Loading from '../components/loading';
 import { AntDesign } from '@expo/vector-icons';
+import { BlurView } from 'expo-blur';
+
 
 /*
  
-NO FUNCIONA TAILWIND EN NINGUNA A
+NO FUNCIONA TAILWIND EN NINGUN ARCHIVO
 
 NOTA: QUITAR LOS ESTILOS EN LINEA O USAR TAILWIND*/
 
@@ -43,8 +45,8 @@ export default function HomeScreen() {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#181818', paddingTop:30 }}>
-            <StatusBar style="light" />
-            <View style={{ paddingHorizontal: 26, paddingVertical: 8 }}>
+            <BlurView blurType='light' blurAmout={10}>
+            <View style={{ paddingHorizontal: 26, paddingVertical: 8}}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     <TouchableOpacity onPress={()=> navigation.navigate('Menu')} >
                         <Ionicons name="menu" size={32} color="#faf9f6" />
@@ -55,6 +57,7 @@ export default function HomeScreen() {
                     </TouchableOpacity>
                 </View>
             </View>
+            </BlurView>
             
             {
                 loading ? (

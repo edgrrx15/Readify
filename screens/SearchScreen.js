@@ -4,6 +4,7 @@ import { TextInput } from 'react-native-gesture-handler'
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios'
+import { Feather } from '@expo/vector-icons';
 import noCoverImage from '../assets/no-cover.jpg';
 
 const { width, height } = Dimensions.get('window')
@@ -35,6 +36,10 @@ export default function SearchScreen() {
       <View
         className="mx-4 mb-3 flex-row justify-between items-center border border-neutral-500 rounded-full"
       >
+         <TouchableOpacity onPress={() => navigation.goBack()} className="rounded-xl p-1">
+          <Feather name="arrow-left" size={24} color="#faf9f6" />
+        </TouchableOpacity>
+
         <TextInput
           placeholder="Buscar libro"
           placeholderTextColor="lightgray"

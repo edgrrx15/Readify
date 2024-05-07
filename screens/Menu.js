@@ -16,6 +16,8 @@ export default function Menu() {
           <Feather name="arrow-left" size={24} color="black" />
       </TouchableOpacity>
 
+      <Text>Libros favoritos</Text>
+
       
     </View>
   )
