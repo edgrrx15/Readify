@@ -105,7 +105,7 @@ const Category = ({title}) => {
         </View>
       ) : (
         <View>
-          <Text style={{ fontWeight: 'bold', fontSize: 30, color: '#ffe75e', textAlign: 'center' }}>
+          <Text style={{ fontWeight: 'bold', fontSize: 30, color: '#ffe75e', textAlign: 'center', paddingTop: 20 }}>
             {title}
           </Text>
           {categoryData.map((category) => (

@@ -42,6 +42,7 @@ export default function BookScreen() {
       <View className="w-full" > 
         <SafeAreaView
           style={{ 
+          position: 'absolute',
           marginBottom: 20,
           marginTop: 20,
           zIndex: 20,
@@ -50,19 +51,19 @@ export default function BookScreen() {
           alignItems: 'center',
           paddingHorizontal: 16,
           width: '100%',}}
-          className={"absolute z-20 w-full flex-row justify-between items-center px-4" + topMargin}
+         
         >
           <TouchableOpacity onPress={() => navigation.goBack()} className="rounded-xl p-1">
-          <Feather name="arrow-left" size={24} color="#faf9f6" />
+          <Feather name="arrow-left" size={24} color="#000" />
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => toggleFavourite(!isFavourite)} >
-            <AntDesign name={isFavourite ? "heart" : "hearto"} size={24} color={isFavourite ? '#ff2626' : "#faf6f9"} />
+            <AntDesign name={isFavourite ? "heart" : "hearto"} size={24} color={isFavourite ? '#ff2626' : "#000"} />
           </TouchableOpacity>
 
         </SafeAreaView>
 
-        <View className="overflow-hidden rounded-full h-20 w-20 items-center border border-neutral-500">
+        <View>
           <Image
             source={
               book.volumeInfo.imageLinks?.thumbnail ? {uri: book.volumeInfo.imageLinks?.thumbnail } : noCoverImage
@@ -109,7 +110,7 @@ export default function BookScreen() {
           
         {previewLink ? (
           <TouchableOpacity onPress={handlePreviewClick}>
-            <Text style={{ color: '#2176ff', fontWeight: 'bold', fontSize: 15 }}>
+            <Text className="text-blue-500 font-semibold text-base text-center">
               Ver vista previa del libro  <FontAwesome name="external-link" size={15} color="#2176ff" />
             </Text>
           </TouchableOpacity>

@@ -36,7 +36,7 @@ export default function SearchScreen() {
       <View
         className="mx-4 mb-3 flex-row justify-between items-center border border-neutral-500 rounded-full"
       >
-         <TouchableOpacity onPress={() => navigation.goBack()} className="rounded-xl p-1">
+         <TouchableOpacity onPress={() => navigation.goBack()} className="rounded-xl p-3">
           <Feather name="arrow-left" size={24} color="#faf9f6" />
         </TouchableOpacity>
 
@@ -75,13 +75,13 @@ export default function SearchScreen() {
               >
                 <View className="space-y-2 mb-4">
                   <Image
-                    className="rounded-3xl"
+                    className="rounded"
                     source={
                       item.volumeInfo.imageLinks?.thumbnail ? { uri: item.volumeInfo.imageLinks.thumbnail } : noCoverImage
                     }                    
                     style={{ width: width * 0.44, height: height * 0.3 }}
                   />
-                  <Text className="text-neutral-400 ml-1" style={{color: '#faf6f9', marginBottom: 20}}>
+                  <Text className="text-neutral-400 ml-1">
                     {item.volumeInfo.title && item.volumeInfo.title.length > 22 ? item.volumeInfo.title.slice(0, 22) + '...' : item.volumeInfo.title}
                   </Text>
                 </View>
@@ -90,10 +90,10 @@ export default function SearchScreen() {
           </View>
         </ScrollView>
       ) : (
-        <View className="flex-row justify-center">
+        <View className="flex-row justify-center ">
           <Image
             source={require('../assets/searchBook.png')}
-            className="h-96 w-96"
+            className="h-96 w-96 "
           />
         </View>
       )}

@@ -1,7 +1,7 @@
 module.exports = {
   content: [
     "./App.js",
-    "./components/**.{js,jsx,ts,tsx}",
+    "./components/**/*.{js,jsx,ts,tsx}",
     "./screens/**.{js,jsx,ts,tsx}", 
     "./navigation/**.{js,jsx,ts,tsx}", 
   ],
