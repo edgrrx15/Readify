@@ -9,11 +9,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 
 
-/*
- 
-NO FUNCIONA TAILWIND EN NINGUN ARCHIVO
 
-NOTA: QUITAR LOS ESTILOS EN LINEA O USAR TAILWIND*/
 
 
 export default function HomeScreen() {
@@ -41,11 +37,11 @@ export default function HomeScreen() {
 
 /* color alterno : #faf9f6 */
 
-/* BOTON DE MENU AUN NO TIENE NINGUNA FUNCION */
+
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#181818', paddingTop:30 }}>
-            <BlurView blurType='light' blurAmout={10}>
+
             <View style={{ paddingHorizontal: 26, paddingVertical: 8}}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     <TouchableOpacity onPress={()=> navigation.navigate('Menu')} >
@@ -57,7 +53,7 @@ export default function HomeScreen() {
                     </TouchableOpacity>
                 </View>
             </View>
-            </BlurView>
+
             
             {
                 loading ? (

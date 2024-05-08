@@ -4,12 +4,10 @@ import { TextInput } from 'react-native-gesture-handler'
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios'
-import { Feather } from '@expo/vector-icons';
 import noCoverImage from '../assets/no-cover.jpg';
-
+import { Feather } from '@expo/vector-icons';
 const { width, height } = Dimensions.get('window')
 
-/* ESTA SECCION FUNCIONA CORRECTAMENTE, SIN EMBARGO SE TIENE QUE AGREGAR DISEÑO YA QUE TAILWIND NO FUNCIONA*/
 
 export default function SearchScreen() {
   const [query, setQuery] = useState('')
@@ -21,7 +19,7 @@ export default function SearchScreen() {
     setLoading(true)
     try {
       const response = await axios.get(
-        `https://www.googleapis.com/books/v1/volumes?q=${query}`
+        `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=40`
       );
       setResults(response.data.items || [])
     } catch (error) {
@@ -36,7 +34,7 @@ export default function SearchScreen() {
       <View
         className="mx-4 mb-3 flex-row justify-between items-center border border-neutral-500 rounded-full"
       >
-         <TouchableOpacity onPress={() => navigation.goBack()} className="rounded-xl p-3">
+         <TouchableOpacity onPress={() => navigation.goBack()} className="rounded-xl ml-5">
           <Feather name="arrow-left" size={24} color="#faf9f6" />
         </TouchableOpacity>
 
@@ -57,7 +55,7 @@ export default function SearchScreen() {
       </View>
 
       {loading ? (
-        <ActivityIndicator size="large" color="#faf9f6" /> 
+        <ActivityIndicator size="large" color="#ffe75e" /> 
       ) : results.length > 0 ? (
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -67,6 +65,12 @@ export default function SearchScreen() {
           <Text className="text-color-texto font-semibold ml-1" style={{color: '#faf6f9'}}>
             Resultados ({results.length})
           </Text>
+
+          <Text className="text-color-texto font-semibold ml-1" style={{color: '#faf6f9'}}>
+            Tu busqueda: {query}
+          </Text>
+
+
           <View className="flex-row justify-between flex-wrap">
             {results.map((item, index) => (
               <TouchableWithoutFeedback

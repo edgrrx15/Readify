@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import {Dimensions, Text, View, TouchableWithoutFeedback, Image, ActivityIndicator} from 'react-native';
+import {Dimensions, Text, View, TouchableWithoutFeedback, Image, ActivityIndicator, TouchableOpacity} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import noCoverImage from '../assets/no-cover.jpg';
-import Loading from './loading';
+import { AntDesign } from '@expo/vector-icons';
 
 
 /* NO FUNCIONA TAILWIND EN EL PROYECTO 
@@ -31,7 +31,6 @@ const categories = [
 
 const Category = ({title}) => {
   const [categoryData, setCategoryData] = useState([]);
-
   const navigation = useNavigation();
 
   const handleClick = (item) => {
@@ -85,12 +84,15 @@ const Category = ({title}) => {
             height: height * 0.4,
 
           }}
+          className='rounded'
           resizeMode='cover'
         />
       </TouchableWithoutFeedback>
-      <Text style={{fontWeight:'semibold', color: '#faf6f8'}}>
+
+        
+      <Text className='font-extrabold text-color-blanco text-lg pt-1'>
         {
-          item.volumeInfo.title.length > 40 ? item.volumeInfo.title.slice(0, 40) + '...' : item.volumeInfo.title
+          item.volumeInfo.title.length > 30 ? item.volumeInfo.title.slice(0, 30) + '...' : item.volumeInfo.title
         }
         </Text>
     </View>
@@ -98,9 +100,10 @@ const Category = ({title}) => {
 
   return (
 
-    <View style={{ flex: 1 }}>
+    <View className='flex-1'>
       {loading ? (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View 
+        className='flex-1 justify-center align-center'>
           <ActivityIndicator size="large" color="#ffe75e"  />
         </View>
       ) : (
@@ -110,13 +113,13 @@ const Category = ({title}) => {
           </Text>
           {categoryData.map((category) => (
             <View key={category.category} style={{ marginBottom: 8 }}>
-              <Text style={{ fontWeight: 'bold', fontSize: 23, color: '#faf6f8', marginLeft: 4, marginBottom: 5 }}>
+              <Text className="text-color-blanco font-semibold text-4xl mt-5 mb-5 px-7">
                 {category.category}
               </Text>
               <Carousel
                 data={category.books}
                 renderItem={({ item }) => <BookCard item={item} />}
-                firstItem={1}
+                firstItem={4}
                 inactiveSlideOpacity={0.60}
                 sliderWidth={width}
                 itemWidth={width * 0.62}
