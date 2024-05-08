@@ -50,9 +50,9 @@ const bookList = ({title, data, hideSeeAll}) => {
       </View>
 
       <ScrollView
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      contentContainerStyle={{paddingHorizontal: 15}}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{paddingHorizontal: 15}}
       >
         {
             data.map((item, index) =>{

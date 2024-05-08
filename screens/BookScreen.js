@@ -2,7 +2,6 @@ import {  Dimensions,  SafeAreaView,  TouchableOpacity,  View,  ScrollView,  Pla
 import React, { useEffect, useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import noCoverImage from '../assets/no-cover.jpg';
@@ -25,7 +24,7 @@ export default function BookScreen() {
 
 
   //Abrir el libro en la web
-  const previewLink = book.volumeInfo.previewLink;
+  const previewLink = book.volumeInfo.previewLink
   const handlePreviewClick = () => {
     if (previewLink) {
       Linking.openURL(previewLink); 
@@ -89,9 +88,9 @@ export default function BookScreen() {
         </View>
       </View>
 
-      <View style={{paddingTop: 8}} className="space-y-3" >
+      <View  className="space-y-3 pt-4" >
 
-        <Text className="text-color-blanco text-center text-4xl font-bold tracking-wider " >
+        <Text className="text-color-blanco text-center text-4xl font-bold tracking-wider" >
           {book.volumeInfo.title || 'Sin título'}
         </Text>
 
@@ -115,13 +114,13 @@ export default function BookScreen() {
         </Text>
           
         {previewLink ? (
-          <TouchableOpacity onPress={handlePreviewClick}>
-            <Text className="text-blue-500 font-bold text-center text-2xl">
-              Ver vista previa del libro  <FontAwesome name="external-link" size={15} color="#2176ff" />
+          <TouchableOpacity onPress={handlePreviewClick} className='bg-neutral-100 p-2 w-2/3 self-center rounded-md'>
+            <Text className="text-neutral-800 font-bold text-center text-xl">
+              Ver vista previa del libro 
             </Text>
           </TouchableOpacity>
         ) : (
-          <Text style={{ marginTop: 20, color: '#faf9f6',  fontSize: 15 }} >
+          <Text className='mt-20 text-color-blanco font-semibold text-center text-2xl' >
             No hay vista previa disponible.
           </Text>
         )}

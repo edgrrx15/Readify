@@ -32,6 +32,9 @@
         "projectId": "00642c1f-6e1f-48ac-97ab-c1d422e639fd"
       }
     },
-    "owner": "edgrrx"
+    "owner": "edgrrx",
+    "plugins": [
+      "expo-font"
+    ]
   }
 }

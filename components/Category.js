@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import {Dimensions, Text, View, TouchableWithoutFeedback, Image, ActivityIndicator, TouchableOpacity} from 'react-native';
-import Carousel from 'react-native-snap-carousel';
-import { useNavigation } from '@react-navigation/native';
-import axios from 'axios';
-import noCoverImage from '../assets/no-cover.jpg';
-import { AntDesign } from '@expo/vector-icons';
+import React, { useEffect, useState } from 'react'
+import {Dimensions, Text, View, TouchableWithoutFeedback, Image, ActivityIndicator} from 'react-native'
+import Carousel from 'react-native-snap-carousel'
+import { useNavigation } from '@react-navigation/native'
+import axios from 'axios'
+import noCoverImage from '../assets/no-cover.jpg'
+import { AntDesign } from '@expo/vector-icons'
 
 
 /* NO FUNCIONA TAILWIND EN EL PROYECTO 
@@ -13,7 +13,7 @@ NOTA:  MEJORAR EL DISEÑO DE LA APP */
 
 
 
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window')
 const categories = [
   'Filosofía',
   'Ciencia ficción',
@@ -27,15 +27,16 @@ const categories = [
   'Auto-ayuda',
   'Infantil',
   'Matematicas',
-];
+]
 
 const Category = ({title}) => {
   const [categoryData, setCategoryData] = useState([]);
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(false)
 
   const handleClick = (item) => {
     navigation.navigate('Book', { book: item });
-  };
+  }
   
 
   const fetchBooksByCategory = async (category) => {
@@ -44,18 +45,18 @@ const Category = ({title}) => {
     try {
       const response = await axios.get(
         `https://www.googleapis.com/books/v1/volumes?q=${category}`
-      );
+      )
       return {
         category,
         books: response.data.items || [],
-      };
+      }
     } catch (error) {
       console.error(`Error al obtener libros para la categoría ${category}:`, error);
-      return { category, books: [] };
+      return { category, books: [] }
     } finally {
       setLoading(false); 
     }
-  };
+  }
 
   useEffect(() => {
     const fetchAllCategories = async () => {
@@ -65,10 +66,8 @@ const Category = ({title}) => {
     };
 
     fetchAllCategories();
-  }, []);
+  }, [])
 
-
-  const [loading, setLoading] = useState(false)
   const BookCard = ({ item }) => (
     <View>
       <TouchableWithoutFeedback onPress={() => handleClick(item)}>
@@ -82,10 +81,9 @@ const Category = ({title}) => {
             {
             width: width * 0.6,
             height: height * 0.4,
-
+            resizeMode: 'cover'
           }}
           className='rounded'
-          resizeMode='cover'
         />
       </TouchableWithoutFeedback>
 
@@ -96,7 +94,22 @@ const Category = ({title}) => {
         }
         </Text>
     </View>
-  );
+  )
+
+  const SkeletonCard = () => (
+    <ContentLoader 
+      speed={2} // Velocidad del efecto de "shimmering"
+      width={200} 
+      height={300} 
+      viewBox="0 0 200 300" 
+      backgroundColor="#d3d3d3" 
+      foregroundColor="#ecebeb" // Color de la animación
+    >
+      <Rect x="0" y="0" rx="10" ry="10" width="200" height="250" /> // Simula una imagen
+      <Rect x="0" y="260" rx="5" ry="5" width="150" height="20" /> // Simula texto
+      <Rect x="0" y="290" rx="5" ry="5" width="100" height="20" /> // Simula más texto
+    </ContentLoader>
+  )
 
   return (
 
@@ -130,7 +143,7 @@ const Category = ({title}) => {
       )}
     </View>
 
-  );
-};
+  )
+}
 
 export default Category;
