@@ -109,7 +109,7 @@ const Category = ({title}) => {
               <Carousel
                 data={category.books}
                 renderItem={({ item }) => <BookCard item={item} />}
-                firstItem={4}
+                firstItem={3}
                 inactiveSlideOpacity={0.60}
                 sliderWidth={width}
                 itemWidth={width * 0.62}

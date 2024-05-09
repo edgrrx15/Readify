@@ -55,12 +55,12 @@ const FavouriteBooks = ({title}) => {
 
   return (
     <View style={{ flex: 1, padding: 10, backgroundColor: '#181818' }}>
-        <Text>{title}</Text>
+        <Text className="text-color-blanco font-semibold text-2xl mt-5 mb-5 px-7">{title}</Text>
       {favourites.length > 0 ? (
        <Carousel
        data={favourites}
-       renderItem={({ item }) => <BookCard item={item} />}
-       firstItem={4}
+       renderItem={({ item }) => <BookCard item={item} handleClick={handleClick} />}
+       firstItem={1}
        inactiveSlideOpacity={0.60}
        sliderWidth={width}
        itemWidth={width * 0.62}
