@@ -4,14 +4,6 @@ import Carousel from 'react-native-snap-carousel'
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import noCoverImage from '../assets/no-cover.jpg'
-import { AntDesign } from '@expo/vector-icons'
-
-
-/* NO FUNCIONA TAILWIND EN EL PROYECTO 
-
-NOTA:  MEJORAR EL DISEÑO DE LA APP */
-
-
 
 const { width, height } = Dimensions.get('window')
 const categories = [
@@ -94,21 +86,6 @@ const Category = ({title}) => {
         }
         </Text>
     </View>
-  )
-
-  const SkeletonCard = () => (
-    <ContentLoader 
-      speed={2} // Velocidad del efecto de "shimmering"
-      width={200} 
-      height={300} 
-      viewBox="0 0 200 300" 
-      backgroundColor="#d3d3d3" 
-      foregroundColor="#ecebeb" // Color de la animación
-    >
-      <Rect x="0" y="0" rx="10" ry="10" width="200" height="250" /> // Simula una imagen
-      <Rect x="0" y="260" rx="5" ry="5" width="150" height="20" /> // Simula texto
-      <Rect x="0" y="290" rx="5" ry="5" width="100" height="20" /> // Simula más texto
-    </ContentLoader>
   )
 
   return (

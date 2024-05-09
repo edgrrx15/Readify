@@ -5,8 +5,9 @@ import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import noCoverImage from '../assets/no-cover.jpg';
+import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-/* SI ES POSIBLE SE AGREGARA UNA SECCION DE LIBROS SIMILARES DEL QUE SE BUSCO O ESTA VIENDO EL USUARIO  */
 
 const { width, height } = Dimensions.get('window');
 const ios = Platform.OS === 'ios';
@@ -14,13 +15,44 @@ const topMargin = ios ? '' : 'mt-3';
 
 export default function BookScreen() {
   const { params: { book } } = useRoute(); 
-  const [isFavourite, toggleFavourite] = useState(false);
+  const [isFavourite, setIsFavourite] = useState(false);
+  const [isSaved, toggleSaved] = useState(false)
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
 
   useEffect(() => {
     setLoading(false); 
   }, [book]);
+
+  //GUARDAR EL LIBRO EN FAVORITOS
+  useEffect(() => {
+    const loadFavourites = async () => {
+      const storedFavourites = await AsyncStorage.getItem('favourites');
+      if (storedFavourites) {
+        const favourites = JSON.parse(storedFavourites);
+        const isFav = favourites.some((fav) => fav.id === book.id);
+        setIsFavourite(isFav);
+      }
+    };
+
+    loadFavourites();
+  }, [book.id]);
+
+  const toggleFavourite = async () => {
+    const storedFavourites = await AsyncStorage.getItem('favourites');
+    const favourites = storedFavourites ? JSON.parse(storedFavourites) : [];
+
+    if (isFavourite) {
+      // Remover de favoritos
+      const newFavourites = favourites.filter((fav) => fav.id !== book.id);
+      await AsyncStorage.setItem('favourites', JSON.stringify(newFavourites));
+    } else {
+      // Agregar a favoritos
+      favourites.push(book);
+      await AsyncStorage.setItem('favourites', JSON.stringify(favourites));
+    }
+    setIsFavourite(!isFavourite);
+  };
 
 
   //Abrir el libro en la web
@@ -51,12 +83,14 @@ export default function BookScreen() {
          
         >
           <TouchableOpacity onPress={() => navigation.goBack()} className="rounded-xl p-1">
-          <Feather name="arrow-left" size={24} color="#faf6f9" />
+            <Feather name="arrow-left" size={24} color="#faf6f9" />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => toggleFavourite(!isFavourite)} >
+          <TouchableOpacity onPress={toggleFavourite} >
             <AntDesign name={isFavourite ? "heart" : "hearto"} size={24} color={isFavourite ? '#ff2626' : "#faf6f9"} />
           </TouchableOpacity>
+
+
 
         </SafeAreaView>
 
@@ -110,23 +144,32 @@ export default function BookScreen() {
 
 
         <Text className="text-color-blanco font-semibold text-base text-center" >
-              Numero de paginas: {book.volumeInfo.pageCount || 'Lo sentimos, no hay informacion'}
+              Número de paginas: {book.volumeInfo.pageCount || 'Lo sentimos, no hay información'}
         </Text>
           
         {previewLink ? (
-          <TouchableOpacity onPress={handlePreviewClick} className='bg-neutral-100 p-2 w-2/3 self-center rounded-md'>
-            <Text className="text-neutral-800 font-bold text-center text-xl">
-              Ver vista previa del libro 
-            </Text>
+          <View className='flex-row justify-between items-center self-center '>
+            <TouchableOpacity onPress={handlePreviewClick} className='bg-neutral-100 p-2 w-2/3 self-center rounded-md'>
+              <Text className="text-neutral-800 font-bold text-center text-xl">
+                Ver vista previa del libro 
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => toggleSaved(!isSaved)} className='ml-4'>
+          <Ionicons name={isSaved ? "bookmark" : "bookmark-outline"} size={28}  />
           </TouchableOpacity>
+          </View>
+          
+          
         ) : (
           <Text className='mt-20 text-color-blanco font-semibold text-center text-2xl' >
             No hay vista previa disponible.
           </Text>
         )}
 
+
         <Text className="text-neutral-400 font-semibold text-base  m-3 text-center" >
-          {book.volumeInfo.description || 'Lo sentimos, no hay descripcion. '}
+          {book.volumeInfo.description || 'Lo sentimos, no hay descripción. '}
         </Text>
 
         

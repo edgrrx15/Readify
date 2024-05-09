@@ -1,11 +1,13 @@
-import { StyleSheet, Text, View, TouchableOpacity} from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity} from 'react-native'
 import React from 'react'
 import { Feather } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import FavouriteBooks from '../components/favouriteBooks';
 
 
 
 export default function Menu() {
+  
 
   const navigation = useNavigation();
   return (
@@ -16,7 +18,9 @@ export default function Menu() {
           <Feather name="arrow-left" size={24} color="black" />
       </TouchableOpacity>
 
-      <Text>Libros favoritos</Text>
+      <ScrollView showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 10 }}>
+          <FavouriteBooks title='Tus libros favoritos: '/>
+       </ScrollView>
 
       
     </View>

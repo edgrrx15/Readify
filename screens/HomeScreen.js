@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import Loading from '../components/loading';
 import { AntDesign } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
+import FavouriteBooks from '../components/favouriteBooks';
 
 
 
@@ -57,6 +58,7 @@ export default function HomeScreen() {
                     <Loading/>
                 ):(
                     <ScrollView showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 10 }}>
+                        <FavouriteBooks title='Tus libros favoritos: '/>
                       <Category title='Categorias'/>
                     </ScrollView>
                 )

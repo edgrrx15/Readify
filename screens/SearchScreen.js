@@ -31,7 +31,7 @@ export default function SearchScreen() {
   }
 
   return (
-    <SafeAreaView className="bg-neutral-800 flex-1 pt-30" style={{paddingTop: 50, backgroundColor: '#181818', flex: 1, color: '#faf6f9'}}>
+    <SafeAreaView className="bg-neutral-800 flex-1 text-color-blanco pt-14" >
       <View
         className="mx-4 mb-3 flex-row justify-between items-center border border-neutral-500 rounded-3xl"
       >
