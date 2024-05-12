@@ -70,25 +70,14 @@ export default function BookScreen() {
       className="flex-1 bg-neutral-900"
     >
       <View className="w-full" > 
-        <SafeAreaView
-          style={{ 
-          position: 'absolute',
-          marginBottom: 20,
-          marginTop: 20,
-          zIndex: 20,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          paddingHorizontal: 16,
-          width: '100%',}}
-         
-        >
-          <TouchableOpacity onPress={() => navigation.goBack()} className="rounded-xl p-1">
-            <Feather name="arrow-left" size={24} color="#faf6f9" />
+        <SafeAreaView className='absolute mb-20 mt-4 z-20 flex flex-row justify-between items-center  w-full'>
+
+          <TouchableOpacity onPress={() => navigation.goBack()} className="rounded-xl p-1 m-4">
+            <Feather name="arrow-left" size={27} color="#faf6f9" />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={toggleFavourite} >
-            <AntDesign name={isFavourite ? "heart" : "hearto"} size={24} color={isFavourite ? '#ff2626' : "#faf6f9"} />
+          <TouchableOpacity onPress={toggleFavourite}  className="rounded-xl p-1 m-4" >
+            <AntDesign name={isFavourite ? "heart" : "hearto"} size={27} color={isFavourite ? '#ff2626' : "#faf6f9"} />
           </TouchableOpacity>
 
 
@@ -123,11 +112,16 @@ export default function BookScreen() {
         </View>
       </View>
 
-      <View  className="space-y-3 pt-4" >
+      <View  className="space-y-3 pt-4 m-3" >
 
-        <Text className="text-color-blanco text-center text-4xl font-bold tracking-wider m-3" >
+        <Text className="text-color-blanco text-center text-4xl font-bold tracking-widest m-3">
           {book.volumeInfo.title || 'Sin título'}
         </Text>
+
+        <Text className="text-color-blanco font-semibold text-base text-center">
+          {book.volumeInfo.authors?.join(', ') || 'Autor desconocido'}
+        </Text>
+
 
         <View className="flex-row justify-center"  >
           <Text className="text-color-blanco font-semibold text-base text-center ">
@@ -139,10 +133,7 @@ export default function BookScreen() {
           {book.volumeInfo.publishedDate ||'Fecha no disponible' }
         </Text>
 
-        <Text className="text-color-blanco font-semibold text-base text-center">
-          {book.volumeInfo.authors?.join(', ') || 'Autor desconocido'}
-        </Text>
-
+  
 
         <Text className="text-color-blanco font-semibold text-base text-center" >
               Número de paginas: {book.volumeInfo.pageCount || 'Lo sentimos, no hay información'}
@@ -150,23 +141,19 @@ export default function BookScreen() {
           
         {previewLink ? (
           <View className='flex-row justify-between items-center self-center '>
-            <TouchableOpacity onPress={handlePreviewClick} className='bg-neutral-100 p-3 w-2/3 self-center rounded-md'>
+            <TouchableOpacity onPress={handlePreviewClick} className='bg-color-blanco p-3 w-2/3 self-center rounded-md'>
               <Text className="text-neutral-800 font-bold text-center text-xl">
                 Ver vista previa del libro 
               </Text>
             </TouchableOpacity>
-
           </View>
-          
-          
         ) : (
           <Text className='mt-20 text-color-blanco font-semibold text-center text-2xl' >
             No hay vista previa disponible.
           </Text>
         )}
 
-
-        <Text className="text-neutral-400 font-semibold text-base  m-3 text-center" >
+        <Text className="text-neutral-400 font-semibold text-base pt-4 m-3 text-center" >
           {book.volumeInfo.description || 'Lo sentimos, no hay descripción. '}
         </Text>
 
@@ -177,5 +164,4 @@ export default function BookScreen() {
     </ScrollView>
   );
 }
-
 

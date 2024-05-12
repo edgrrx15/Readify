@@ -3,7 +3,9 @@ import HomeScreen from '../screens/HomeScreen'
 import BookScreen from '../screens/BookScreen'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import SearchScreen from '../screens/SearchScreen';
-import Menu from '../screens/Menu'
+import MenuScreen from '../screens/MenuScreen'
+import FavoriteScreen from '../screens/FavoriteScreen'
+import HistoryScreen from '../screens/HistoryScreen' 
 
 const Stack = createNativeStackNavigator(); 
 
@@ -31,8 +33,21 @@ export default function appNavigation() {
         <Stack.Screen
           name="Menu"
           options={{ headerShown: false }}
-          component={Menu}
+          component={MenuScreen}
+        />
+
+        <Stack.Screen
+          name="Favorite"
+          options={{ headerShown: false }}
+          component={FavoriteScreen}
         />  
+
+        <Stack.Screen
+          name="History"
+          options={{ headerShown: false }}
+          component={HistoryScreen}
+        />  
+        
       </Stack.Navigator>
     </NavigationContainer>
   )

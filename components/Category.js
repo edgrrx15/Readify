@@ -4,6 +4,7 @@ import Carousel from 'react-native-snap-carousel'
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import noCoverImage from '../assets/no-cover.jpg'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width, height } = Dimensions.get('window')
 const categories = [
@@ -26,9 +27,17 @@ const Category = ({title}) => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false)
 
-  const handleClick = (item) => {
+  const handleClick = async (item) => {
     navigation.navigate('Book', { book: item });
-  }
+    
+    let history = await AsyncStorage.getItem('recentlyViewedBooks');
+    history = history ? JSON.parse(history) : [];
+    if (!history.find(book => book.id === item.id)) {
+      history.push(item);
+      await AsyncStorage.setItem('recentlyViewedBooks', JSON.stringify(history));
+    }
+  };
+  
   
 
   const fetchBooksByCategory = async (category) => {
@@ -97,13 +106,13 @@ const Category = ({title}) => {
           <ActivityIndicator size="large" color="#ffe75e"  />
         </View>
       ) : (
-        <View>
-          <Text style={{ fontWeight: 'bold', fontSize: 30, color: '#ffe75e', textAlign: 'center', paddingTop: 20 }}>
+        <View >
+          <Text  style={{ fontWeight: 'bold', fontSize: 30, color: '#ffe75e', textAlign: 'center', paddingTop: 20 }}>
             {title}
           </Text>
           {categoryData.map((category) => (
             <View key={category.category} style={{ marginBottom: 8 }}>
-              <Text className="text-color-blanco font-semibold text-4xl mt-5 mb-5 px-7">
+              <Text className="text-color-blanco font-semibold text-4xl m-4">
                 {category.category}
               </Text>
               <Carousel

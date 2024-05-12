@@ -5,10 +5,11 @@ import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import noCoverImage from '../assets/no-cover.jpg';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Feather } from '@expo/vector-icons';
+
+
 const { width, height } = Dimensions.get('window')
-
-
 export default function SearchScreen() {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState([])
@@ -30,8 +31,18 @@ export default function SearchScreen() {
     Keyboard.dismiss();
   }
 
+    const handleClick = async (item) => {
+    navigation.navigate('Book', { book: item });
+    let history = await AsyncStorage.getItem('recentlyViewedBooks');
+    history = history ? JSON.parse(history) : [];
+    if (!history.find(book => book.id === item.id)) {
+      history.push(item);
+      await AsyncStorage.setItem('recentlyViewedBooks', JSON.stringify(history));
+    }
+  };
+
   return (
-    <SafeAreaView className="bg-neutral-800 flex-1 text-color-blanco pt-14" >
+    <SafeAreaView className="bg-color-negro flex-1 text-color-blanco pt-14" >
       <View
         className="mx-4 mb-3 flex-row justify-between items-center border border-neutral-500 rounded-3xl"
       >
@@ -42,7 +53,7 @@ export default function SearchScreen() {
         <TextInput
           placeholder="Buscar libro"
           placeholderTextColor="lightgray"
-          className="pb-1 pl-6 flex-1 text-base font-semibold text-color-texto"
+          className="pb-1 pl-6 flex-1 text-base font-semibold text-color-blanco"
           value={query}
           onChangeText={(text) => setQuery(text)}
           style={{color: '#faf6f9'}}
@@ -55,9 +66,13 @@ export default function SearchScreen() {
           <AntDesign name="search1" size={32} color="#faf9f6" />
         </TouchableOpacity>
       </View>
+      
 
       {loading ? (
-        <ActivityIndicator size="large" color="#ffe75e" className='object-center  w-96 h-96 text-9xl'/> 
+        <View classNam='ml-4'>
+          <Text className='text-color-blanco ml-5'>Buscando <Text className='font-bold'>"{query}"</Text>...</Text>
+          <ActivityIndicator size="large" color="#ffe75e" className='object-center  w-96 h-96 text-9xl'/> 
+        </View>
       ) : results.length > 0 ? (
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -68,11 +83,12 @@ export default function SearchScreen() {
             Resultados ({results.length})
           </Text>
 
+
           <View className="flex-row justify-between flex-wrap">
             {results.map((item, index) => (
               <TouchableWithoutFeedback
                 key={index}
-                onPress={() => navigation.push('Book', { book: item })}
+                onPress={() => handleClick(item)}
               >
                 <View className="space-y-2 mb-4">
                   <Image
@@ -82,13 +98,14 @@ export default function SearchScreen() {
                     }                    
                     style={{ width: width * 0.44, height: height * 0.3, resizeMode: 'cover'}}
                   />
-                  <Text className="text-neutral-400 ml-1">
+                  <Text className="text-neutral-400 ml-1 mt-2">
                     {item.volumeInfo.title && item.volumeInfo.title.length > 22 ? item.volumeInfo.title.slice(0, 22) + '...' : item.volumeInfo.title}
                   </Text>
                 </View>
               </TouchableWithoutFeedback>
             ))}
           </View>
+
         </ScrollView>
       ) : (
         <View>
