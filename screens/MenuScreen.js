@@ -11,7 +11,7 @@ export default function MenuScreen() {
 
   const navigation = useNavigation();
   return (
-    <ScrollView className='pt-10  flex-1 bg-color-negro mb-30'>
+    <ScrollView className='pt-10  flex-1 bg-color-negro mb-30 '>
       <TouchableOpacity onPress={() => navigation.goBack()} className="rounded-xl p-1 mb-5 m-4 ">
           <Feather name="arrow-left" size={24} color="#faf6f9" />
       </TouchableOpacity>

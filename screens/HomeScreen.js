@@ -37,7 +37,7 @@ export default function HomeScreen() {
 
     return (
 
-        <SafeAreaView style={{ flex: 1, paddingTop: 30, backgroundColor: '#181818'}}>
+        <SafeAreaView className='flex-1 pt-10 bg-color-negro'>
 
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }} className='m-4'>
                 <TouchableOpacity onPress={() => navigation.navigate('Menu')}>

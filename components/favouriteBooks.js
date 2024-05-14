@@ -23,7 +23,6 @@ const FavouriteBooks = ({ title }) => {
 
   const handleClick = async (item) => {
     navigation.navigate('Book', { book: item });
-    
     let history = await AsyncStorage.getItem('recentlyViewedBooks');
     history = history ? JSON.parse(history) : [];
     if (!history.find(book => book.id === item.id)) {
@@ -35,6 +34,10 @@ const FavouriteBooks = ({ title }) => {
 
   return (
     <ScrollView className="p-4">
+      <View className='flex-row justify-between p-3 mb-2'>
+      <Text className='text-color-blanco text-lg'>{title}</Text>
+      <Text className='text-red-800 text-lg'>Borrar</Text>
+      </View>
       <View className="flex flex-row flex-wrap justify-between">
         {favourites.map((book) => (
           <TouchableWithoutFeedback key={book.id} onPress={() => handleClick(book)}>
@@ -47,8 +50,8 @@ const FavouriteBooks = ({ title }) => {
                 />
               </View>
               <View className="mt-2">
-                <Text className="text-lg font-bold text-color-blanco">
-                  {book.volumeInfo.title.length > 18 ? book.volumeInfo.title.slice(0, 18) + '...' : book.volumeInfo.title}
+                <Text className="text-neutral-400 ml-1">
+                  {book.volumeInfo.title.length > 26 ? book.volumeInfo.title.slice(0, 26) + '...' : book.volumeInfo.title}
                 </Text>
               </View>
             </View>

@@ -40,9 +40,9 @@ const RecentlyViewedBooks = () => {
                 />
               </View>
               <View className="mt-2">
-                <Text className="text-lg font-bold text-color-blanco">
+                <Text className="text-neutral-400 ml-1">
                   {
-                    book.volumeInfo.title.length > 20 ? book.volumeInfo.title.slice(0,20) + '...' :  book.volumeInfo.title
+                    book.volumeInfo.title.length > 26 ? book.volumeInfo.title.slice(0,26) + '...' :  book.volumeInfo.title
                   }
                 </Text>
     
