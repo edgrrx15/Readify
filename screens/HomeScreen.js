@@ -4,7 +4,7 @@ import Category from '../components/Category';
 import { useNavigation } from '@react-navigation/native';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-import { Skeleton } from 'moti/skeleton';
+import Saludo from '../components/Greeting'
 
 
 
@@ -31,30 +31,25 @@ export default function HomeScreen() {
         setLoading(false); 
       }, []);
 
-/* color alterno : #faf9f6 */
-
-
-
     return (
+        <SafeAreaView className='flex-1 pt-10 bg-gray-900'>
 
-        <SafeAreaView className='flex-1 pt-10 bg-color-negro'>
-
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }} className='m-4'>
+            <View  className='flex-row justify-between m-4  p-3 items-center'>
                 <TouchableOpacity onPress={() => navigation.navigate('Menu')}>
                     <SimpleLineIcons name="menu" size={24} color="#faf9f6" />
                 </TouchableOpacity>
-                <Text style={{ color: '#faf9f6', fontSize: 34, fontWeight: 'bold' }}>Readify</Text>
+                
+                <Text  className='text-color-blanco text-5xl font-bold'>Readify</Text>
+        
                 <TouchableOpacity onPress={() => navigation.navigate('Search')}>
                     <AntDesign name="search1" size={32} color="#faf9f6" />
                 </TouchableOpacity>
-                </View>
+            </View>
                 
             <ScrollView showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 10 }}>
-                    <Category title='Categorias'/>
+                <Saludo/>
+                <Category/>
             </ScrollView>
-            
-
-   
         </SafeAreaView>
     );
 }

@@ -45,7 +45,7 @@ const Category = ({title}) => {
     setLoading(true)
     try {
       const response = await axios.get(
-        `https://www.googleapis.com/books/v1/volumes?q=${category}`
+        `https://www.googleapis.com/books/v1/volumes?q=${category}&maxResults=20`
       )
       return {
         category,
@@ -107,9 +107,6 @@ const Category = ({title}) => {
         </View>
       ) : (
         <View >
-          <Text  style={{ fontWeight: 'bold', fontSize: 30, color: '#ffe75e', textAlign: 'center', paddingTop: 20 }}>
-            {title}
-          </Text>
           {categoryData.map((category) => (
             <View key={category.category} style={{ marginBottom: 8 }}>
               <Text className="text-color-blanco font-semibold text-4xl m-4">

@@ -6,49 +6,35 @@ import SearchScreen from '../screens/SearchScreen';
 import MenuScreen from '../screens/MenuScreen'
 import FavoriteScreen from '../screens/FavoriteScreen'
 import HistoryScreen from '../screens/HistoryScreen' 
-
+import SplashScreen from '../screens/SplashScreen'
+import { useEffect, useState } from 'react';
 const Stack = createNativeStackNavigator(); 
 
 export default function appNavigation() {
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000); 
+
+    return () => clearTimeout(timer);
+  }, []);
+
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home"> 
-        <Stack.Screen
-          name="Home"
-          options={{ headerShown: false }}
-          component={HomeScreen}
-        />
-        <Stack.Screen
-          name="Book"
-          options={{ headerShown: false }}
-          component={BookScreen}
-        />
-
-        <Stack.Screen
-          name="Search"
-          options={{ headerShown: false }}
-          component={SearchScreen}
-        />  
-
-        <Stack.Screen
-          name="Menu"
-          options={{ headerShown: false }}
-          component={MenuScreen}
-        />
-
-        <Stack.Screen
-          name="Favorite"
-          options={{ headerShown: false }}
-          component={FavoriteScreen}
-        />  
-
-        <Stack.Screen
-          name="History"
-          options={{ headerShown: false }}
-          component={HistoryScreen}
-        />  
-        
-      </Stack.Navigator>
+      {isLoading ? (
+        <SplashScreen />
+      ) : (
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Book" component={BookScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Search" component={SearchScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Menu" component={MenuScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Favorite" component={FavoriteScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="History" component={HistoryScreen} options={{ headerShown: false }} />
+        </Stack.Navigator>
+      )}
     </NavigationContainer>
   )
 }

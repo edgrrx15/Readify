@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Text, View, Dimensions, SafeAreaView, TouchableOpacity, TouchableWithoutFeedback, Image, ScrollView, ActivityIndicator, Keyboard} from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 import { AntDesign } from '@expo/vector-icons';
@@ -39,31 +39,39 @@ export default function SearchScreen() {
       history.push(item);
       await AsyncStorage.setItem('recentlyViewedBooks', JSON.stringify(history));
     }
-  };
+  }
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   return (
-    <SafeAreaView className="bg-color-negro flex-1 text-color-blanco pt-14" >
+    <SafeAreaView className="bg-gray-900 flex-1 text-color-blanco pt-14" >
       <View
-        className="mx-4 mb-3 flex-row justify-between items-center border border-neutral-500 rounded-3xl"
+        className="mx-4 mb-3 flex-row justify-between items-center border border-gray-600 rounded-3xl bg-gray-800"
       >
          <TouchableOpacity onPress={() => navigation.goBack()} className="rounded-xl ml-5">
-          <Feather name="arrow-left" size={24} color="#faf9f6" />
+          <Feather name="arrow-left" size={24} color="#faf6f9" />
         </TouchableOpacity>
 
         <TextInput
+          ref={inputRef}
           placeholder="Buscar libro"
-          placeholderTextColor="lightgray"
+          placeholderTextColor="#faf6f9"
           className="pb-1 pl-6 flex-1 text-base font-semibold text-color-blanco"
           value={query}
           onChangeText={(text) => setQuery(text)}
-          style={{color: '#faf6f9'}}
           onSubmitEditing={searchBooks}
         />
         <TouchableOpacity
           onPress={searchBooks}
           className="rounded-full p-3 m-1"
         >
-          <AntDesign name="search1" size={32} color="#faf9f6" />
+          <AntDesign name="search1" size={32} color="#faf6f9" />
         </TouchableOpacity>
       </View>
       

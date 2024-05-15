@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, TouchableWithoutFeedback, Image, Text, Dimensions } from 'react-native';
+import { View, ScrollView, TouchableWithoutFeedback, Image, Text, Dimensions, Modal, Pressable } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import noCoverImage from '../assets/no-cover.jpg';
-
+import { Ionicons } from '@expo/vector-icons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Feather } from '@expo/vector-icons';
 const { width } = Dimensions.get('window');
 
 const FavouriteBooks = ({ title }) => {
   const [favourites, setFavourites] = useState([]);
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const navigation = useNavigation();
 
   useEffect(() => {
     const loadFavourites = async () => {
       const storedFavourites = await AsyncStorage.getItem('favourites');
       if (storedFavourites) {
-        setFavourites(JSON.parse(storedFavourites));
+       setFavourites(JSON.parse(storedFavourites));
       }
     };
 
@@ -29,39 +32,80 @@ const FavouriteBooks = ({ title }) => {
       history.push(item);
       await AsyncStorage.setItem('recentlyViewedBooks', JSON.stringify(history));
     }
-  };
+  }
+
+  const clearFavorites =  async () =>{
+    try {
+      await AsyncStorage.removeItem('favourites');
+      setFavourites([]);
+      navigation.navigate('Favorite');
+      setShowConfirmation(false)
+    } catch (error) {
+      console.error('Error al borrar tus favoritos:', error);
+    }
+  }
   
 
   return (
-    <ScrollView className="p-4">
-      <View className='flex-row justify-between p-3 mb-2'>
-      <Text className='text-color-blanco text-lg'>{title}</Text>
-      <Text className='text-red-800 text-lg'>Borrar</Text>
+
+<ScrollView className="p-4 bg-gray-900">
+  {favourites.length > 0 ? (
+    <View className="flex-row justify-between p-3 mb-2">
+      <Text className="text-white text-lg">{title} ({favourites.length})</Text>
+      <TouchableOpacity onPress={() => setShowConfirmation(true)}>
+        <Text className="text-red-600 text-lg">Borrar todo</Text>
+      </TouchableOpacity>
+    </View>
+  ) : null}
+
+  <Modal visible={showConfirmation} animationType="fade" transparent >
+    <View className="flex-1 justify-center items-center p-4" style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
+      <View className="bg-gray-800 p-6 rounded-xl items-center border border-gray-700">
+        <Ionicons name="alert" size={72} color="#faf6f9" />
+        <Text className="text-white text-2xl text-center font-bold mt-5 mb-5">
+          ¿Estás seguro que quieres borrar tus libros favoritos?
+        </Text>   
+        <View className="flex-row justify-center">
+          <Pressable onPress={() => setShowConfirmation(false)} className="bg-gray-700 p-4 mr-4 rounded-lg items-center">
+            <Text className="text-white font-bold">Cancelar</Text>
+          </Pressable>
+          <Pressable onPress={clearFavorites}  className="bg-red-600 px-4 py-2 rounded-lg flex-row items-center">
+            <Feather name="trash" size={20} color="white" />
+            <Text className="text-white font-bold ml-2">Borrar Favoritos</Text>
+          </Pressable>
+        </View>
       </View>
-      <View className="flex flex-row flex-wrap justify-between">
-        {favourites.map((book) => (
-          <TouchableWithoutFeedback key={book.id} onPress={() => handleClick(book)}>
-            <View className="w-1/2 mb-4 px-2">
-              <View className=" rounded-lg overflow-hidden">
-                <Image
-                  source={book.volumeInfo.imageLinks?.thumbnail ? { uri: book.volumeInfo.imageLinks.thumbnail } : noCoverImage}
-                  style={{ width: '100%', height: 230, resizeMode: 'cover' }}
-                  className="rounded-lg"
-                />
-              </View>
-              <View className="mt-2">
-                <Text className="text-neutral-400 ml-1">
-                  {book.volumeInfo.title.length > 26 ? book.volumeInfo.title.slice(0, 26) + '...' : book.volumeInfo.title}
-                </Text>
-              </View>
+    </View>
+  </Modal>
+
+  <View className="flex flex-row flex-wrap justify-between mb-6">
+    {favourites.length > 0 ? (
+      favourites.map((book) => (
+        <TouchableWithoutFeedback key={book.id} onPress={() => handleClick(book)}>
+          <View className="w-1/2 mb-4 px-2">
+            <View className="rounded-lg overflow-hidden">
+              <Image
+                source={book.volumeInfo.imageLinks?.thumbnail ? { uri: book.volumeInfo.imageLinks.thumbnail } : noCoverImage}
+                style={{ width: '100%', height: 230, resizeMode: 'cover' }}
+                className="rounded-lg"
+              />
             </View>
-          </TouchableWithoutFeedback>
-        ))}
-        {favourites.length === 0 && (
-        <Text className='text-color-blanco text-2xl m-4'>No tienes ningun libro favorito</Text>
-      )}
+            <View className="mt-2">
+              <Text  className="text-neutral-400 ml-1">
+                {book.volumeInfo.title.length > 26 ? book.volumeInfo.title.slice(0, 26) + '...' : book.volumeInfo.title}
+              </Text>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+      ))
+    ) : (
+      <View className='flex-1 justify-center items-center'>
+        <Text className="text-white text-lg">Aun tienes ningún libro favorito</Text>
       </View>
-    </ScrollView>
+    )}
+  </View>
+</ScrollView>
+
   );
 };
 

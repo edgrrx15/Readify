@@ -7,7 +7,7 @@ import React from 'react'
 export default function FavoriteScreen() {
   const navigation = useNavigation();
   return (
-    <View className='flex-1 pt-10 mb-5 bg-color-negro '>
+    <View className='flex-1 pt-10  bg-gray-950 '>
       <TouchableOpacity onPress={() => navigation.goBack()} className="rounded-xl p-1 mb-5 m-4 ">
           <Feather name="arrow-left" size={24} color="#faf6f9" />
       </TouchableOpacity>
