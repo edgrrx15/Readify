@@ -6,8 +6,6 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import Saludo from '../components/Greeting'
 
-
-
 export default function HomeScreen() {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false)

@@ -21,22 +21,15 @@ export default function MenuScreen() {
           <AntDesign name= "hearto"  size={24} color= "#faf6f9"/>
           <Text className='text-lg text-color-blanco font-semibold ml-2'>Mis libros favoritos</Text>
         </TouchableOpacity>
-        
       </View>
 
       <View className='bg-gray-800  p-4 rounded-xl m-4 border border-gray-600'>
-      <TouchableOpacity  onPress={() => navigation.navigate('History')} className='flex items-center'>
-          <MaterialIcons name="history" size={30} color="#faf6f9" />
-          <Text className='text-lg text-color-blanco font-semibold ml-2'>Visto recientemente</Text>
+        <TouchableOpacity  onPress={() => navigation.navigate('History')} className='flex items-center'>
+            <MaterialIcons name="history" size={30} color="#faf6f9" />
+            <Text className='text-lg text-color-blanco font-semibold ml-2'>Visto recientemente</Text>
         </TouchableOpacity>
       </View>
 
-
-
-
-
-
-      
     </ScrollView>
   )
 }

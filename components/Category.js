@@ -38,7 +38,6 @@ const Category = ({title}) => {
     }
   };
   
-  
 
   const fetchBooksByCategory = async (category) => {
 
@@ -91,7 +90,7 @@ const Category = ({title}) => {
         
       <Text className='font-extrabold text-color-blanco text-lg pt-1'>
         {
-          item.volumeInfo.title.length > 30 ? item.volumeInfo.title.slice(0, 30) + '...' : item.volumeInfo.title
+          item.volumeInfo.title.length > 32 ? item.volumeInfo.title.slice(0, 32) + '...' : item.volumeInfo.title
         }
         </Text>
     </View>
@@ -109,7 +108,7 @@ const Category = ({title}) => {
         <View >
           {categoryData.map((category) => (
             <View key={category.category} style={{ marginBottom: 8 }}>
-              <Text className="text-color-blanco font-semibold text-4xl m-4">
+              <Text className="text-color-blanco font-semibold text-4xl m-7">
                 {category.category}
               </Text>
               <Carousel

@@ -5,14 +5,9 @@ import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import noCoverImage from '../assets/no-cover.jpg';
-import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { color } from 'react-native-reanimated';
-
 
 const { width, height } = Dimensions.get('window');
-const ios = Platform.OS === 'ios';
-const topMargin = ios ? '' : 'mt-3';
 
 export default function BookScreen() {
   const { params: { book } } = useRoute(); 
@@ -55,12 +50,11 @@ export default function BookScreen() {
     setIsFavourite(!isFavourite);
   };
 
-
   //Abrir el libro en la web
   const previewLink = book.volumeInfo.previewLink
   const handlePreviewClick = () => {
     if (previewLink) {
-      Linking.openURL(previewLink); 
+    Linking.openURL(previewLink); 
     }
   };
 
@@ -79,9 +73,6 @@ export default function BookScreen() {
           <TouchableOpacity onPress={toggleFavourite}  className="rounded-xl p-1 m-4" >
             <AntDesign name={isFavourite ? "heart" : "hearto"} size={27} color={isFavourite ? '#ff2626' : "#faf6f9"} />
           </TouchableOpacity>
-
-
-
         </SafeAreaView>
 
         <View>
@@ -111,7 +102,6 @@ export default function BookScreen() {
       </View>
 
       <View  className="space-y-3 pt-4 m-3" >
-
         <Text className="text-color-blanco text-center text-4xl font-bold tracking-widest m-3">
           {book.volumeInfo.title || 'Sin título'}
         </Text>
@@ -119,7 +109,6 @@ export default function BookScreen() {
         <Text className="text-color-blanco font-semibold text-base text-center">
           {book.volumeInfo.authors?.join(', ') || 'Autor desconocido'}
         </Text>
-
 
         <View className="flex-row justify-center"  >
           <Text className="text-color-blanco font-semibold text-base text-center ">
@@ -130,8 +119,6 @@ export default function BookScreen() {
         <Text className="text-color-blanco font-semibold text-base text-center">
           {book.volumeInfo.publishedDate ||'Fecha no disponible' }
         </Text>
-
-  
 
         <Text className="text-color-blanco font-semibold text-base text-center" >
               Número de paginas: {book.volumeInfo.pageCount || 'Lo sentimos, no hay información'}
@@ -154,11 +141,7 @@ export default function BookScreen() {
         <Text className="text-neutral-400 font-semibold text-base pt-4 m-3 text-center" >
           {book.volumeInfo.description || 'Lo sentimos, no hay descripción. '}
         </Text>
-
-        
-
       </View>
-
     </ScrollView>
   );
 }

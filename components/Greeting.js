@@ -9,7 +9,7 @@ const Greeting = () => {
     if (hour >= 5 && hour < 12) {
       greeting = '¡Hola, Buen día!';
     } else if (hour >= 12 && hour < 19) {
-      greeting = '¡Hola, Buenas tardes!';
+      greeting = '¡Hola, buenas tardes!';
     } else {
       greeting = '¡Hola, Buenas noches!';
     }

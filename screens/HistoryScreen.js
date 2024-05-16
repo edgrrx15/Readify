@@ -15,7 +15,7 @@ export default function HistoryScreen() {
           <Feather name="arrow-left" size={24} color="#faf6f9" />
       </TouchableOpacity>
       
-      <History/>
+      <History title='Mi historial'/>
     </View>
   )
 }

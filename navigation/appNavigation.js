@@ -8,8 +8,8 @@ import FavoriteScreen from '../screens/FavoriteScreen'
 import HistoryScreen from '../screens/HistoryScreen' 
 import SplashScreen from '../screens/SplashScreen'
 import { useEffect, useState } from 'react';
-const Stack = createNativeStackNavigator(); 
 
+const Stack = createNativeStackNavigator(); 
 export default function appNavigation() {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -19,7 +19,6 @@ export default function appNavigation() {
 
     return () => clearTimeout(timer);
   }, []);
-
 
   return (
     <NavigationContainer>

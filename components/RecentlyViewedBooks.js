@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import noCoverImage from '../assets/no-cover.jpg';
 
-const RecentlyViewedBooks = () => {
+const RecentlyViewedBooks = ({title}) => {
   const [recentlyViewed, setRecentlyViewed] = useState([]);
   const navigation = useNavigation();
 
@@ -35,12 +35,14 @@ const RecentlyViewedBooks = () => {
 
   return (
     <ScrollView className="p-4 bg-gray-900">
-      
 
       {recentlyViewed.length > 0 ? (
-          <TouchableOpacity onPress={ClearHistory}>
-                <Text className='text-red-400 text-lg font-bold  p-3 rounded-md right-0'>Limpiar historial</Text>
-          </TouchableOpacity>
+          <View className='flex-row items-center justify-between'>
+            <Text className="text-white text-lg m-3">{title} ({recentlyViewed.length})</Text>
+            <TouchableOpacity onPress={ClearHistory}>
+                  <Text className="text-red-600 text-lg m-3">Limpiar historial</Text>
+            </TouchableOpacity>
+          </View>
         ) : null
       }
 

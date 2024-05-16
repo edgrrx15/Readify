@@ -100,14 +100,14 @@ export default function SearchScreen() {
               >
                 <View className="space-y-2 mb-4">
                   <Image
-                    className="rounded"
+                    className="rounded-lg"
                     source={
                       item.volumeInfo.imageLinks?.thumbnail ? { uri: item.volumeInfo.imageLinks.thumbnail } : noCoverImage
                     }                    
                     style={{ width: width * 0.44, height: height * 0.3, resizeMode: 'cover'}}
                   />
                   <Text className="text-neutral-400 ml-1 mt-2">
-                    {item.volumeInfo.title && item.volumeInfo.title.length > 22 ? item.volumeInfo.title.slice(0, 22) + '...' : item.volumeInfo.title}
+                    {item.volumeInfo.title && item.volumeInfo.title.length > 26 ? item.volumeInfo.title.slice(0, 26) + '...' : item.volumeInfo.title}
                   </Text>
                 </View>
               </TouchableWithoutFeedback>

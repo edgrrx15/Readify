@@ -63,7 +63,7 @@ const FavouriteBooks = ({ title }) => {
       <View className="bg-gray-800 p-6 rounded-xl items-center border border-gray-700">
         <Ionicons name="alert" size={72} color="#faf6f9" />
         <Text className="text-white text-2xl text-center font-bold mt-5 mb-5">
-          ¿Estás seguro que quieres borrar tus libros favoritos?
+          ¿Estás seguro que quieres borrar tus {favourites.length} libros favoritos?
         </Text>   
         <View className="flex-row justify-center">
           <Pressable onPress={() => setShowConfirmation(false)} className="bg-gray-700 p-4 mr-4 rounded-lg items-center">
