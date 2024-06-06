@@ -30,17 +30,17 @@ export default function HomeScreen() {
       }, []);
 
     return (
-        <SafeAreaView className='flex-1 pt-10 bg-gray-900'>
+        <SafeAreaView className='flex-1 pt-10 bg-fondo'>
 
             <View  className='flex-row justify-between m-4  p-3 items-center'>
                 <TouchableOpacity onPress={() => navigation.navigate('Menu')}>
-                    <SimpleLineIcons name="menu" size={24} color="#faf9f6" />
+                    <SimpleLineIcons name="menu" size={24} color= "#E6FFFD" />
                 </TouchableOpacity>
                 
                 <Text  className='text-color-blanco text-5xl font-bold'>Readify</Text>
         
                 <TouchableOpacity onPress={() => navigation.navigate('Search')}>
-                    <AntDesign name="search1" size={32} color="#faf9f6" />
+                    <AntDesign name="search1" size={32} color="#E6FFFD" />
                 </TouchableOpacity>
             </View>
                 

@@ -6,7 +6,6 @@ import noCoverImage from '../assets/no-cover.jpg';
 import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
-const { width } = Dimensions.get('window');
 
 const FavouriteBooks = ({ title }) => {
   const [favourites, setFavourites] = useState([]);

@@ -55,13 +55,13 @@ export default function SearchScreen() {
         className="mx-4 mb-3 flex-row justify-between items-center border border-gray-600 rounded-3xl bg-gray-800"
       >
          <TouchableOpacity onPress={() => navigation.goBack()} className="rounded-xl ml-5">
-          <Feather name="arrow-left" size={24} color="#faf6f9" />
+          <Feather name="arrow-left" size={24} color="#E6FFFD" />
         </TouchableOpacity>
 
         <TextInput
           ref={inputRef}
           placeholder="Buscar libro"
-          placeholderTextColor="#faf6f9"
+          placeholderTextColor="#E6FFFD"
           className="pb-1 pl-6 flex-1 text-base font-semibold text-color-blanco"
           value={query}
           onChangeText={(text) => setQuery(text)}
@@ -71,7 +71,7 @@ export default function SearchScreen() {
           onPress={searchBooks}
           className="rounded-full p-3 m-1"
         >
-          <AntDesign name="search1" size={32} color="#faf6f9" />
+          <AntDesign name="search1" size={32} color="#E6FFFD" />
         </TouchableOpacity>
       </View>
       
@@ -79,7 +79,7 @@ export default function SearchScreen() {
       {loading ? (
         <View classNam='ml-4'>
           <Text className='text-color-blanco ml-5'>Buscando <Text className='font-bold'>"{query}"</Text>...</Text>
-          <ActivityIndicator size="large" color="#ffe75e" className='object-center  w-96 h-96 text-9xl'/> 
+          <ActivityIndicator size="large" color="#E6FFFD" className='object-center  w-96 h-96 text-9xl'/> 
         </View>
       ) : results.length > 0 ? (
         <ScrollView
@@ -87,7 +87,7 @@ export default function SearchScreen() {
           contentContainerStyle={{ paddingHorizontal: 15 }}
           className="space-y-3"
         >
-          <Text className="text-color-blanco font-semibold ml-1">
+          <Text className="text-color-blanco font-extrabold ml-1">
             Resultados ({results.length})
           </Text>
 
@@ -106,7 +106,7 @@ export default function SearchScreen() {
                     }                    
                     style={{ width: width * 0.44, height: height * 0.3, resizeMode: 'cover'}}
                   />
-                  <Text className="text-neutral-400 ml-1 mt-2">
+                  <Text className="text-neutral-200 ml-1 mt-2 font-bold">
                     {item.volumeInfo.title && item.volumeInfo.title.length > 26 ? item.volumeInfo.title.slice(0, 26) + '...' : item.volumeInfo.title}
                   </Text>
                 </View>

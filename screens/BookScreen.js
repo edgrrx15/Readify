@@ -61,17 +61,17 @@ export default function BookScreen() {
   return (
     <ScrollView 
       contentContainerStyle={{ paddingBottom: 50, paddingTop: 40 }}
-      className="flex-1 bg-gray-900"
+      className="flex-1 bg-fondo"
     >
       <View className="w-full" > 
         <SafeAreaView className='absolute mb-20 mt-4 z-20 flex flex-row justify-between items-center  w-full'>
 
           <TouchableOpacity onPress={() => navigation.goBack()} className="rounded-xl p-1 m-4">
-            <Feather name="arrow-left" size={27} color="#faf6f9" />
+            <Feather name="arrow-left" size={27} color="#E6FFFD" />
           </TouchableOpacity>
 
           <TouchableOpacity onPress={toggleFavourite}  className="rounded-xl p-1 m-4" >
-            <AntDesign name={isFavourite ? "heart" : "hearto"} size={27} color={isFavourite ? '#ff2626' : "#faf6f9"} />
+            <AntDesign name={isFavourite ? "heart" : "hearto"} size={27} color={isFavourite ? '#ff2626' : "#E6FFFD"} />
           </TouchableOpacity>
         </SafeAreaView>
 
@@ -126,7 +126,7 @@ export default function BookScreen() {
           
         {previewLink ? (
           <View className='flex-row justify-between items-center self-center '>
-            <TouchableOpacity onPress={handlePreviewClick} className='bg-color-blanco p-3 w-2/3 self-center rounded-md'>
+            <TouchableOpacity onPress={handlePreviewClick} className='bg-color-light-blue p-3 w-2/3 self-center rounded-md'>
               <Text className="text-neutral-800 font-bold text-center text-xl">
                 Ver vista previa del libro 
               </Text>
