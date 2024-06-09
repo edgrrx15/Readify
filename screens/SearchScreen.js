@@ -50,19 +50,18 @@ export default function SearchScreen() {
   }, []);
 
   return (
-    <SafeAreaView className="bg-gray-900 flex-1 text-color-blanco pt-14" >
+    <SafeAreaView className="bg-blanco flex-1 text-color-negro pt-14" >
       <View
-        className="mx-4 mb-3 flex-row justify-between items-center border border-gray-600 rounded-3xl bg-gray-800"
+        className="mx-4 mb-3 flex-row justify-between items-center border border-gray-200 rounded-full bg-input"
       >
          <TouchableOpacity onPress={() => navigation.goBack()} className="rounded-xl ml-5">
-          <Feather name="arrow-left" size={24} color="#E6FFFD" />
+          <Feather name="arrow-left" size={24} color="#0B1215" />
         </TouchableOpacity>
 
         <TextInput
           ref={inputRef}
           placeholder="Buscar libro"
-          placeholderTextColor="#E6FFFD"
-          className="pb-1 pl-6 flex-1 text-base font-semibold text-color-blanco"
+          className="flex-1 text-gray-700 placeholder-gray-400 focus:outline-none pl-4"
           value={query}
           onChangeText={(text) => setQuery(text)}
           onSubmitEditing={searchBooks}
@@ -71,14 +70,14 @@ export default function SearchScreen() {
           onPress={searchBooks}
           className="rounded-full p-3 m-1"
         >
-          <AntDesign name="search1" size={32} color="#E6FFFD" />
+          <AntDesign name="search1" size={32} color="#0B1215" />
         </TouchableOpacity>
       </View>
       
 
       {loading ? (
         <View classNam='ml-4'>
-          <Text className='text-color-blanco ml-5'>Buscando <Text className='font-bold'>"{query}"</Text>...</Text>
+          <Text className='text-color-negro ml-5'>Buscando <Text className='font-bold'>"{query}"</Text>...</Text>
           <ActivityIndicator size="large" color="#E6FFFD" className='object-center  w-96 h-96 text-9xl'/> 
         </View>
       ) : results.length > 0 ? (
@@ -87,7 +86,7 @@ export default function SearchScreen() {
           contentContainerStyle={{ paddingHorizontal: 15 }}
           className="space-y-3"
         >
-          <Text className="text-color-blanco font-extrabold ml-1">
+          <Text className="text-color-negro font-extrabold ml-1">
             Resultados ({results.length})
           </Text>
 
@@ -106,7 +105,7 @@ export default function SearchScreen() {
                     }                    
                     style={{ width: width * 0.44, height: height * 0.3, resizeMode: 'cover'}}
                   />
-                  <Text className="text-neutral-200 ml-1 mt-2 font-bold">
+                  <Text className="text-neutral-500 ml-1 mt-2 font-bold">
                     {item.volumeInfo.title && item.volumeInfo.title.length > 26 ? item.volumeInfo.title.slice(0, 26) + '...' : item.volumeInfo.title}
                   </Text>
                 </View>
@@ -123,6 +122,7 @@ export default function SearchScreen() {
           />
         </View>
       )}
+      
     </SafeAreaView>
   );
 }

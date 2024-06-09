@@ -47,28 +47,28 @@ const FavouriteBooks = ({ title }) => {
 
   return (
 
-<ScrollView className="p-4 bg-gray-900">
+<ScrollView className="p-4 bg-color-blanco">
   {favourites.length > 0 ? (
     <View className="flex-row justify-between p-3 mb-2">
-      <Text className="text-white text-lg">{title} ({favourites.length})</Text>
+      <Text className="text-color-negro text-lg">{title} ({favourites.length})</Text>
       <TouchableOpacity onPress={() => setShowConfirmation(true)}>
-        <Text className="text-red-600 text-lg">Borrar todo</Text>
+        <Text className="text-red-500 text-lg">Borrar todo</Text>
       </TouchableOpacity>
     </View>
   ) : null}
 
   <Modal visible={showConfirmation} animationType="fade" transparent >
     <View className="flex-1 justify-center items-center p-4" style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
-      <View className="bg-gray-800 p-6 rounded-xl items-center border border-gray-700">
-        <Ionicons name="alert" size={72} color="#faf6f9" />
-        <Text className="text-white text-2xl text-center font-bold mt-5 mb-5">
+      <View className="bg-color-blanco p-6 rounded-xl items-center border border-gray-700">
+        <Ionicons name="alert" size={72} color="#0B1215" />
+        <Text className="text-color-negro text-2xl text-center font-bold mt-5 mb-5">
           ¿Estás seguro que quieres borrar tus {favourites.length} libros favoritos?
         </Text>   
         <View className="flex-row justify-center">
-          <Pressable onPress={() => setShowConfirmation(false)} className="bg-gray-700 p-4 mr-4 rounded-lg items-center">
-            <Text className="text-white font-bold">Cancelar</Text>
+          <Pressable onPress={() => setShowConfirmation(false)} className="p-4 mr-4 rounded-lg items-center">
+            <Text className="text-color-negro font-bold">Cancelar</Text>
           </Pressable>
-          <Pressable onPress={clearFavorites}  className="bg-red-600 px-4 py-2 rounded-lg flex-row items-center">
+          <Pressable onPress={clearFavorites}  className="bg-red-400 px-4 py-2 rounded-lg flex-row items-center">
             <Feather name="trash" size={20} color="white" />
             <Text className="text-white font-bold ml-2">Borrar Favoritos</Text>
           </Pressable>
@@ -82,7 +82,7 @@ const FavouriteBooks = ({ title }) => {
       favourites.map((book) => (
         <TouchableWithoutFeedback key={book.id} onPress={() => handleClick(book)}>
           <View className="w-1/2 mb-4 px-2">
-            <View className="rounded-lg overflow-hidden">
+            <View className="rounded-lg overflow-hidden ">
               <Image
                 source={book.volumeInfo.imageLinks?.thumbnail ? { uri: book.volumeInfo.imageLinks.thumbnail } : noCoverImage}
                 style={{ width: '100%', height: 230, resizeMode: 'cover' }}
@@ -90,8 +90,8 @@ const FavouriteBooks = ({ title }) => {
               />
             </View>
             <View className="mt-2">
-              <Text  className="text-neutral-400 ml-1">
-                {book.volumeInfo.title.length > 26 ? book.volumeInfo.title.slice(0, 26) + '...' : book.volumeInfo.title}
+              <Text  className="text-neutral-500 ml-1">
+                {book.volumeInfo.title.length > 24 ? book.volumeInfo.title.slice(0, 24) + '...' : book.volumeInfo.title}
               </Text>
             </View>
           </View>

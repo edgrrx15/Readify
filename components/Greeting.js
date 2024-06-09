@@ -18,7 +18,7 @@ const Greeting = () => {
   };
 
   return (
-    <Text className='font-bold text-3xl color-yellow-200  items-center text-center'>
+    <Text className='font-bold text-3xl text-orange-400  items-center text-center'>
     {getGreeting()}
   </Text>
   );

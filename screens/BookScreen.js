@@ -1,26 +1,17 @@
-import {  Dimensions,  SafeAreaView,  TouchableOpacity,  View,  ScrollView,  Platform,  Image,  Text, Linking} from 'react-native';
 import React, { useEffect, useState } from 'react';
+import { ScrollView, Text, TouchableOpacity, View, Image, Linking, Dimensions} from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { AntDesign } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
+import { AntDesign, Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import noCoverImage from '../assets/no-cover.jpg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width, height } = Dimensions.get('window');
-
-export default function BookScreen() {
-  const { params: { book } } = useRoute(); 
+const BookScreen = () => {
+  const { params: { book } } = useRoute();
   const [isFavourite, setIsFavourite] = useState(false);
-  const [isSaved, toggleSaved] = useState(false)
-  const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
 
-  useEffect(() => {
-    setLoading(false); 
-  }, [book]);
-
-  //GUARDAR EL LIBRO EN FAVORITOS
   useEffect(() => {
     const loadFavourites = async () => {
       const storedFavourites = await AsyncStorage.getItem('favourites');
@@ -39,110 +30,85 @@ export default function BookScreen() {
     const favourites = storedFavourites ? JSON.parse(storedFavourites) : [];
 
     if (isFavourite) {
-      // Remover de favoritos
       const newFavourites = favourites.filter((fav) => fav.id !== book.id);
       await AsyncStorage.setItem('favourites', JSON.stringify(newFavourites));
     } else {
-      // Agregar a favoritos
       favourites.push(book);
       await AsyncStorage.setItem('favourites', JSON.stringify(favourites));
     }
     setIsFavourite(!isFavourite);
   };
 
-  //Abrir el libro en la web
-  const previewLink = book.volumeInfo.previewLink
   const handlePreviewClick = () => {
-    if (previewLink) {
-    Linking.openURL(previewLink); 
+    if (book.volumeInfo.previewLink) {
+      Linking.openURL(book.volumeInfo.previewLink);
     }
   };
 
   return (
     <ScrollView 
       contentContainerStyle={{ paddingBottom: 50, paddingTop: 40 }}
-      className="flex-1 bg-fondo"
+      className="flex-1 bg-F9F7F7"
     >
-      <View className="w-full" > 
-        <SafeAreaView className='absolute mb-20 mt-4 z-20 flex flex-row justify-between items-center  w-full'>
-
-          <TouchableOpacity onPress={() => navigation.goBack()} className="rounded-xl p-1 m-4">
-            <Feather name="arrow-left" size={27} color="#E6FFFD" />
+      <LinearGradient
+        colors={['rgba(172, 188, 255, 0.3)', 'rgba(172, 188, 255, 1)']}
+        style={{ position: 'absolute', width: 0, height: 0 }}
+      />
+      <View className="px-4">
+        <View className="flex-row justify-between items-center mb-4">
+          <TouchableOpacity onPress={() => navigation.goBack()} className="p-4">
+            <Feather name="arrow-left" size={24} color="#2F4858" />
           </TouchableOpacity>
-
-          <TouchableOpacity onPress={toggleFavourite}  className="rounded-xl p-1 m-4" >
-            <AntDesign name={isFavourite ? "heart" : "hearto"} size={27} color={isFavourite ? '#ff2626' : "#E6FFFD"} />
+          <TouchableOpacity onPress={toggleFavourite} className="p-4">
+            <AntDesign name={isFavourite ? "heart" : "hearto"} size={24} color={isFavourite ? '#ff2626' : "#2F4858"} />
           </TouchableOpacity>
-        </SafeAreaView>
-
-        <View>
+        </View>
+        <View className="items-center mb-4">
           <Image
-            source={
-              book.volumeInfo.imageLinks?.thumbnail ? {uri: book.volumeInfo.imageLinks?.thumbnail } : noCoverImage
-            }
-
-            className="rounded-t-3xl"
-            style={{ width, height: height * 0.64 }}
-          />
-
-        <LinearGradient
-            colors={['transparent', 'rgba(17,24,39,0.3)', 'rgba(17,24,39,1)']}
-            style={{width, height: height*0.3, position: 'absolute', top: 0, opacity: 0.62}}
-            start={{x: 0.5, y: 1}}
-            end={{x: 0.5, y: 0}}
-          />
-
-          <LinearGradient
-            colors={['transparent', 'rgba(17,24,39,0.3)', 'rgba(17,24,39,1)']}
-            style={{width, height: height*0.44, position: 'absolute', bottom: 0}}
-            start={{x: 0.5, y: 0}}
-            end={{x: 0.5, y: 1}}
+            source={book.volumeInfo.imageLinks?.thumbnail ? { uri: book.volumeInfo.imageLinks.thumbnail } : noCoverImage}
+            style={{ width: width * 0.8, height: height * 0.5, borderRadius: 20 , borderColor: '#000'}}
+            className="rounded-lg"
           />
         </View>
-      </View>
 
-      <View  className="space-y-3 pt-4 m-3" >
-        <Text className="text-color-blanco text-center text-4xl font-bold tracking-widest m-3">
-          {book.volumeInfo.title || 'Sin título'}
+
+        <Text className="text-4xl font-bold text-gray-700 text-center mb-2">
+            {book.volumeInfo.title || 'Sin título'}
         </Text>
-
-        <Text className="text-color-blanco font-semibold text-base text-center">
+        <Text className="text-lg text-gray-600 text-center mb-6">
           {book.volumeInfo.authors?.join(', ') || 'Autor desconocido'}
         </Text>
 
-        <View className="flex-row justify-center"  >
-          <Text className="text-color-blanco font-semibold text-base text-center ">
-            {book.volumeInfo.categories|| 'Sin categoría'}
+        <View className="bg-white rounded-lg shadow-lg p-4 mb-4 flex flex-row flex-wrap justify-between">
+        <View className="w-full md:w-1/2 lg:w-1/3 mb-4">
+          <Text className="text-lg text-gray-600 text-center mb-2">
+            Número de páginas: {book.volumeInfo.pageCount || 'Desconocido'}
+          </Text>
+
+          <Text className="text-lg text-gray-600 text-center mb-2">
+           Categoría: <Text className='uppercase'>{book.volumeInfo.language || 'Desconocido'}</Text>
+          </Text>
+
+          <Text className="text-lg text-gray-600 text-center mb-2">
+            Fecha de publicación: {book.volumeInfo.publishedDate || 'Desconocida'}
+          </Text>
+          <Text className="text-lg text-gray-600 text-center mb-2">
+            Categoría: {book.volumeInfo.categories?.join(', ') || 'Desconocida'}
+          </Text>
+          <TouchableOpacity onPress={handlePreviewClick} className="bg-orange-500 py-3 px-6 rounded-full mb-4 mt-2">
+            <Text className="text-lg font-bold text-white text-center">
+              Ver vista previa del libro
+            </Text>
+          </TouchableOpacity>
+          <Text className='text-center mt-6 mb-4 text-3xl font-bold'>Descripción</Text>
+          <Text className="text-lg text-gray-600 mb-4 text-center">
+            {book.volumeInfo.description || 'Lo sentimos, no hay descripción.'}
           </Text>
         </View>
-
-        <Text className="text-color-blanco font-semibold text-base text-center">
-          {book.volumeInfo.publishedDate ||'Fecha no disponible' }
-        </Text>
-
-        <Text className="text-color-blanco font-semibold text-base text-center" >
-              Número de paginas: {book.volumeInfo.pageCount || 'Lo sentimos, no hay información'}
-        </Text>
-          
-        {previewLink ? (
-          <View className='flex-row justify-between items-center self-center '>
-            <TouchableOpacity onPress={handlePreviewClick} className='bg-color-light-blue p-3 w-2/3 self-center rounded-md'>
-              <Text className="text-neutral-800 font-bold text-center text-xl">
-                Ver vista previa del libro 
-              </Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <Text className='mt-20 text-color-blanco font-semibold text-center text-2xl' >
-            No hay vista previa disponible.
-          </Text>
-        )}
-
-        <Text className="text-neutral-400 font-semibold text-base pt-4 m-3 text-center" >
-          {book.volumeInfo.description || 'Lo sentimos, no hay descripción. '}
-        </Text>
+        </View>
       </View>
     </ScrollView>
   );
-}
+};
 
+export default BookScreen;

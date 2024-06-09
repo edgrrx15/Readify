@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import {Dimensions, Text, View, TouchableWithoutFeedback, Image, ActivityIndicator} from 'react-native'
-import Carousel from 'react-native-snap-carousel'
-import { useNavigation } from '@react-navigation/native'
-import axios from 'axios'
-import noCoverImage from '../assets/no-cover.jpg'
+import React, { useEffect, useState } from 'react';
+import { Dimensions, Text, View, TouchableWithoutFeedback, Image, ActivityIndicator, TouchableOpacity, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
+import noCoverImage from '../assets/no-cover.jpg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const { width, height } = Dimensions.get('window')
+const { width, height } = Dimensions.get('window');
 const categories = [
+  'Todos',
   'Filosofía',
   'Ciencia ficción',
   'Historia',
@@ -20,12 +20,31 @@ const categories = [
   'Auto-ayuda',
   'Infantil',
   'Matematicas',
-]
+];
 
-const Category = ({title}) => {
+const Category = () => {
   const [categoryData, setCategoryData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('Todos');
   const navigation = useNavigation();
-  const [loading, setLoading] = useState(false)
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        selectedCategory === 'Todos' ? 'https://www.googleapis.com/books/v1/volumes?q=maxResults=40' : `https://www.googleapis.com/books/v1/volumes?q=${selectedCategory}&maxResults=40`
+      );
+      setCategoryData(response.data.items || []);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [selectedCategory]);
 
   const handleClick = async (item) => {
     navigation.navigate('Book', { book: item });
@@ -37,95 +56,56 @@ const Category = ({title}) => {
       await AsyncStorage.setItem('recentlyViewedBooks', JSON.stringify(history));
     }
   };
-  
-
-  const fetchBooksByCategory = async (category) => {
-
-    setLoading(true)
-    try {
-      const response = await axios.get(
-        `https://www.googleapis.com/books/v1/volumes?q=${category}&maxResults=20`
-      )
-      return {
-        category,
-        books: response.data.items || [],
-      }
-    } catch (error) {
-      console.error(`Error al obtener libros para la categoría ${category}:`, error);
-      return { category, books: [] }
-    } finally {
-      setLoading(false); 
-    }
-  }
-
-  useEffect(() => {
-    const fetchAllCategories = async () => {
-      const promises = categories.map(fetchBooksByCategory);
-      const results = await Promise.all(promises);
-      setCategoryData(results);
-    };
-
-    fetchAllCategories();
-  }, [])
-
-  const BookCard = ({ item }) => (
-    <View>
-      <TouchableWithoutFeedback onPress={() => handleClick(item)}>
-        <Image
-          source={
-            item.volumeInfo.imageLinks?.thumbnail
-              ? { uri: item.volumeInfo.imageLinks.thumbnail }
-              : noCoverImage
-          }
-          style={
-            {
-            width: width * 0.6,
-            height: height * 0.4,
-            resizeMode: 'cover'
-          }}
-          className='rounded'
-        />
-      </TouchableWithoutFeedback>
-
-        
-      <Text className='font-extrabold text-color-blanco text-lg pt-1'>
-        {
-          item.volumeInfo.title.length > 32 ? item.volumeInfo.title.slice(0, 32) + '...' : item.volumeInfo.title
-        }
-        </Text>
-    </View>
-  )
 
   return (
-
-    <View className='flex-1'>
+    <View className="flex-1 px-4 pt-4 pb-2 ">
+       <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      contentContainerStyle="px-4 py-2"
+    >
+      {categories.map((category) => (
+        <TouchableOpacity
+          key={category}
+          onPress={() => setSelectedCategory(category)}
+          className={`mr-4 py-2 px-4 rounded-full ${selectedCategory === category ? 'bg-yellow-500' : 'bg-input'}`}
+        >
+          <Text
+            style={{
+              fontSize: 18,
+              color: selectedCategory === category ? '#FFF' : '#666',
+              fontWeight: selectedCategory === category ? 'bold' : 'normal',
+            }}
+          >
+            {category}
+          </Text>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
       {loading ? (
-        <View 
-        className='flex-1 justify-center align-center'>
-          <ActivityIndicator size="large" color="#ffe75e"  />
+        <View className="flex-1 justify-center items-center ">
+          <ActivityIndicator size="large" color="#ffe75e" />
         </View>
       ) : (
-        <View >
-          {categoryData.map((category) => (
-            <View key={category.category} style={{ marginBottom: 8 }}>
-              <Text className="text-color-blanco font-semibold text-4xl m-7">
-                {category.category}
-              </Text>
-              <Carousel
-                data={category.books}
-                renderItem={({ item }) => <BookCard item={item} />}
-                firstItem={3}
-                inactiveSlideOpacity={0.60}
-                sliderWidth={width}
-                itemWidth={width * 0.62}
-              />
-            </View>
+        <View className="flex-row justify-between flex-wrap mt-4">
+          {categoryData.map((book) => (
+            <TouchableWithoutFeedback key={book.id} onPress={() => handleClick(book)}>
+              <View className="w-1/2 mb-4 border-3 border-gray-200">
+                <Image
+                  source={book.volumeInfo.imageLinks?.thumbnail ? { uri: book.volumeInfo.imageLinks.thumbnail } : noCoverImage}
+                  style={{ width: width * 0.44, height: height * 0.3, resizeMode: 'cover'}}
+                  className="w-full h-44 rounded"
+                />
+                <Text className="text-base text-gray-900 mt-2">
+                  {book.volumeInfo.title.length > 26 ? book.volumeInfo.title.slice(0, 26) + '...' : book.volumeInfo.title}
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
           ))}
         </View>
       )}
     </View>
-
-  )
-}
+  );
+};
 
 export default Category;

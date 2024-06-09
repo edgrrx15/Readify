@@ -34,13 +34,13 @@ const RecentlyViewedBooks = ({title}) => {
   };
 
   return (
-    <ScrollView className="p-4 bg-gray-900">
+    <ScrollView className="p-4 bg-color-blanco">
 
       {recentlyViewed.length > 0 ? (
           <View className='flex-row items-center justify-between'>
-            <Text className="text-white text-lg m-3">{title} ({recentlyViewed.length})</Text>
+            <Text className="text-color-negro text-lg m-3">{title} ({recentlyViewed.length})</Text>
             <TouchableOpacity onPress={ClearHistory}>
-                  <Text className="text-red-600 text-lg m-3">Limpiar historial</Text>
+                  <Text className="text-red-400 text-lg m-3">Limpiar historial</Text>
             </TouchableOpacity>
           </View>
         ) : null
@@ -53,17 +53,14 @@ const RecentlyViewedBooks = ({title}) => {
               <View className="rounded-lg overflow-hidden">
                 <Image
                   source={book.volumeInfo.imageLinks?.thumbnail ? { uri: book.volumeInfo.imageLinks.thumbnail } : noCoverImage}
-                  style={{ width: '100%', height: 230, resizeMode: 'cover' }}
+                  style={{ width: '100%', height: 230, resizeMode: 'cover', }}
                   className="rounded-lg"
                 />
               </View>
               <View className="mt-2">
-                <Text className="text-neutral-400 ml-1">
-                  {
-                    book.volumeInfo.title.length > 26 ? book.volumeInfo.title.slice(0,26) + '...' :  book.volumeInfo.title
-                  }
+                <Text className="text-neutral-500 ml-1">
+                  {book.volumeInfo.title.length > 24 ? book.volumeInfo.title.slice(0,24) + '...' :  book.volumeInfo.title}
                 </Text>
-    
               </View>
             </View>
           </TouchableWithoutFeedback>
@@ -71,7 +68,7 @@ const RecentlyViewedBooks = ({title}) => {
       </View>
       {recentlyViewed.length === 0 && (
         <View className='flex-1 justify-center items-center -mt-8'>
-           <Text className="text-color-blanco text-lg">No hay libros vistos recientemente</Text>
+           <Text className="text-color-negro text-lg">No hay libros vistos recientemente</Text>
          </View>
 
       )}
